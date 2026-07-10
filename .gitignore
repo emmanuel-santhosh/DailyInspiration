@@ -9,6 +9,10 @@
 /dataSources/
 /dataSources.local.xml
 
+# Specific to IntelliJ Idea
+.idea
+*.iml
+
 #frontend
 # Logs
 /frontend/logs
@@ -34,5 +38,3 @@
 *.njsproj
 *.sln
 *.sw?
-.idea
-*.iml
