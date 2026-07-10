@@ -9,11 +9,23 @@
 /dataSources/
 /dataSources.local.xml
 
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 # Specific to IntelliJ Idea
 .idea
+*.iws
 *.iml
+*.ipr
 
-#frontend
+# frontend
 # Logs
 /frontend/logs
 /frontend/*.log
@@ -29,12 +41,18 @@
 /frontend/*.local
 /frontend/*.iml
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# backend
+/backend/HELP.md
+/backend/target/
+/backend/.mvn/wrapper/maven-wrapper.jar
+/backend/!**/src/main/**/target/
+/backend/!**/src/test/**/target/
+
+### STS ###
+/backend/.apt_generated
+/backend/.classpath
+/backend/.factorypath
+/backend/.project
+/backend/.settings
+/backend/.springBeans
+/backend/.sts4-cache
