@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
 
 @SpringBootTest
-@ActiveProfiles("test")
 @AutoConfigureMockMvc
 class GhAuthControllerTest {
 
