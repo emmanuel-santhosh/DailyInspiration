@@ -17,7 +17,7 @@ public class SecurityConfig {
     private String appUrl;
 
     @Bean
-    public SecurityFilterChain myOauthFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain myOauthFilterChain(HttpSecurity http) {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
