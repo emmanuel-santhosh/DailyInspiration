@@ -5,7 +5,9 @@ function App() {
 
     return (
         <>
-            <OAuth2Github></OAuth2Github>
+            <div className="myDiv">
+                <OAuth2Github></OAuth2Github>
+            </div>
         </>
     )
 }
