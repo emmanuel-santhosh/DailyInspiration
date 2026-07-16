@@ -24,6 +24,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/auth/gh/me").authenticated()
                         .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().permitAll())
+                .logout(l -> l.logoutSuccessUrl(appUrl))
                 .oauth2Login(o -> o
                         .defaultSuccessUrl(appUrl));
         return http.build();
