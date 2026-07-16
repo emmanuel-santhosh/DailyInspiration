@@ -1,13 +1,28 @@
 import './App.css'
-import OAuth2Github from "./components/OAuth2Github.tsx";
+import {useEffect, useState} from "react";
+import Login from "./components/Login.tsx";
+import Journal from "./components/Journal.tsx";
 
 function App() {
 
+    const [user, setUser] = useState<string | undefined | null>(undefined);
+
+    // Set page title
+    useEffect(() => {
+        document.title =
+            typeof user === "string"
+                ? `Daily Inspiration - ${user}`
+                : "Daily Inspiration - Login"
+    }, [user]);
+
     return (
         <>
-            <div className="pageContainer">
-                <OAuth2Github></OAuth2Github>
-            </div>
+            {typeof user != "string" &&
+                <Login setUser={setUser}></Login>
+            }
+            {typeof user === "string" &&
+                <Journal user={user}></Journal>
+            }
         </>
     )
 }
