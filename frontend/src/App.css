@@ -1,13 +1,13 @@
 div,
 button {
-    cursor: url("/public/cursor/pen-tool.svg") 12 0, auto ;
+    cursor: url("/public/cursor/pen-tool.svg") 12 0, auto;
 }
 
 div {
     display: flex;
     flex-direction: column;
     width: fit-content;
-    margin:auto;
+    margin: auto;
     margin-top: 1rem;
     gap: 0.5rem;
 }
