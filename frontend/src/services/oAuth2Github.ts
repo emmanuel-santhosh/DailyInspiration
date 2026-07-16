@@ -1,22 +1,18 @@
-import {backendUrl, frontendUri, oauthGithubMeEndpoint, oauthGithubUri} from "../types/Redirection.ts";
-import axios from "axios";
+import {backendUrl, frontendUri, oauthGithubUri} from "../types/Redirection.ts";
 
-type userProps = {
-    setUser: (user: string | undefined | null) => void;
-}
-
-export default function oAuth2Github() {
+export function oAuth2Github_login() {
     const host =
         window.location.host === frontendUri
             ? backendUrl
             : window.location.origin;
     window.open(host + oauthGithubUri, "_self");
-
 }
 
-export const loadUser = (props: Readonly<userProps>) => {
-    axios.get(oauthGithubMeEndpoint)
-        .then(response =>
-            props.setUser(response.data)
-        )
+export function oAuth2Github_logout() {
+    const host =
+        window.location.host === frontendUri
+            ? backendUrl
+            : window.location.origin;
+    window.open(host + "/logout", "_self");
+
 }
