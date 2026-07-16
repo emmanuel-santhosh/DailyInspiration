@@ -1,7 +1,12 @@
 import axios from "axios";
 import {useEffect} from "react";
 
-export default function OAuth2Github() {
+type userProps = {
+    setUser:(user: string | undefined | null) => void;
+}
+
+export default function OAuth2Github(props: Readonly<userProps>) {
+
     function oauth2Github() {
         const host =
             window.location.host === "localhost:5173"
@@ -13,7 +18,8 @@ export default function OAuth2Github() {
     const loadUser = () => {
         axios.get("api/auth/gh/me")
             .then(response =>
-                console.log(response.data))
+                props.setUser(response.data)
+            )
     }
 
     useEffect(() => {
