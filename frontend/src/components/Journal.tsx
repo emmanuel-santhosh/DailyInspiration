@@ -6,13 +6,14 @@ export default function Journal(props: Readonly<userProps>) {
     return(
         <>
             <header>
-                <h2>Welcome, {props.user} !</h2>
+                <h1>Welcome, {props.user} !</h1>
             </header>
             <div className="pageContainerPostLogin">
-                <button>Make new entry</button>
+                <button className={"firstChild"}>Make new entry</button>
                 <button>Retrieve existing entries</button>
                 <button>Make changes to existing entry</button>
                 <button>Delete entries</button>
+                <button>Logout</button>
             </div>
         </>
     )
