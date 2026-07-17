@@ -1,15 +1,6 @@
-import {useEffect} from "react";
-import oAuth2Github, {loadUser} from "../services/oAuth2Github.ts";
+import {oAuth2Github_login} from "../services/oAuth2Github.ts";
 
-type userProps = {
-    setUser: (user: string | undefined | null) => void;
-}
-
-export default function Login(props: Readonly<userProps>) {
-
-    useEffect(() => {
-        loadUser(props);
-    }, []);
+export default function Login() {
 
     return (
         <>
@@ -18,7 +9,7 @@ export default function Login(props: Readonly<userProps>) {
             </header>
             <div className="pageContainerPreLogin">
                 <button className={"firstChild"}
-                        onClick={oAuth2Github}>Authenticate via GitHub
+                        onClick={oAuth2Github_login}>Authenticate via GitHub
                 </button>
                 <button>Create account</button>
                 <button>Login with username and password</button>

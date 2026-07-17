@@ -1,5 +1,8 @@
+import {oAuth2Github_logout} from "../services/oAuth2Github.ts";
+import type {userType} from "../types/User.ts";
+
 type userProps = {
-    user:string | undefined | null;
+    user: userType
 }
 
 export default function Journal(props: Readonly<userProps>) {
@@ -13,7 +16,7 @@ export default function Journal(props: Readonly<userProps>) {
                 <button>Retrieve existing entries</button>
                 <button>Make changes to existing entry</button>
                 <button>Delete entries</button>
-                <button>Logout</button>
+                <button onClick={oAuth2Github_logout}>Logout</button>
             </div>
         </>
     )
