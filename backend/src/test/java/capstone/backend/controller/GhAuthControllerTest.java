@@ -13,15 +13,15 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class GhAuthControllerTest {
 
-    private String apiBaseEndpoint = "/api/auth/gh";
+    private final String apiBaseEndpoint = "/api/auth/gh";
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    @DirtiesContext
     void getMe_shouldReturnString_whenUserLoggedIn() throws Exception {
         // Given
         String functionEndpoint = "/me";
