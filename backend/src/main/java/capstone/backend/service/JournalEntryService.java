@@ -17,6 +17,10 @@ public class JournalEntryService {
         this.journalEntryRepo = journalEntryRepo;
     }
 
+    private Optional<JournalEntry> findJournalEntryByQuoteAndTopic(String quote, String topic){
+        return journalEntryRepo.findJournalEntryByQuoteAndTopic(quote, topic);
+    }
+
     public List<JournalEntryDto> findAllJournalEntries() {
         return journalEntryRepo
                 .findAll()
@@ -26,7 +30,7 @@ public class JournalEntryService {
     }
 
     public JournalEntryDto createJournalEntry(JournalEntryDto journalEntryDto){
-        Optional<JournalEntry> possibleExistingEntry = journalEntryRepo.findJournalEntryByQuoteAndTopic(journalEntryDto.quote(), journalEntryDto.topic());
+        Optional<JournalEntry> possibleExistingEntry = findJournalEntryByQuoteAndTopic(journalEntryDto.quote(), journalEntryDto.topic());
         JournalEntry createdJournalEntry = possibleExistingEntry
                         .orElse(journalEntryRepo.save(journalEntryDto.toEntity()));
         return JournalEntryDto.fromEntity(createdJournalEntry);
