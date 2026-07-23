@@ -44,4 +44,39 @@ class JournalEntryDtoTest {
         assertThat(actualJEDto.topic()).isEmpty();
     }
 
+    @Test
+    void toEntity_shouldReturnEntityWithDtoAttributes_AttributesAreNonEmpty_idShouldNotExist() {
+        // Given
+        String testEntryQuote = "Life is good !";
+        String testEntryTopic = "Hope";
+        JournalEntryDto testDto = new JournalEntryDto(testEntryQuote, testEntryTopic);
+
+        // When
+        JournalEntry actualEntry = testDto.toEntity();
+
+        // Then
+        assertThat(actualEntry.getQuote()).isEqualTo(testDto.quote());
+        assertThat(actualEntry.getTopic()).isEqualTo(testDto.topic());
+        assertThat(actualEntry.getId()).isNull();
+        /*
+        * id should not exist because it is created when being stored to database,
+        * NOT when converting from DTO
+        * */
+    }
+
+    @Test
+    void toEntity_shouldReturnEntityWithDtoAttributes_AttributesAreEmptyOrNull_idShouldNotExist() {
+        // Given
+        String testEntryQuote = "";
+        String testEntryTopic = null;
+        JournalEntryDto testDto = new JournalEntryDto(testEntryQuote, testEntryTopic);
+
+        // When
+        JournalEntry actualEntry = testDto.toEntity();
+
+        // Then
+        assertThat(actualEntry.getQuote()).isEqualTo(testDto.quote());
+        assertThat(actualEntry.getTopic()).isEqualTo(testDto.topic());
+        assertThat(actualEntry.getId()).isNull();
+    }
 }
