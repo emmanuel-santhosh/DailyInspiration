@@ -108,4 +108,29 @@ class JournalEntryServiceTest {
         // Then
         assertThat(actualResult).isNotEmpty();
     }
-}
+
+    @Test
+    void createJournalEntry_shouldReturnGivenDto_whenNoMatchingJournalEntryPresent() {
+        // Given
+        String testQuote = "q1";
+        String testTopic = "t1";
+        JournalEntryDto testDto = new JournalEntryDto(testQuote, testTopic);
+        JournalEntry testEntry = JournalEntry.builder()
+                                    .quote(testQuote)
+                                    .topic(testTopic)
+                                    .build();
+
+        JournalEntryRepo testRepo = mock(JournalEntryRepo.class);
+        // This line mocks no matching JournalEntry present
+        when(testRepo.findJournalEntryByQuoteAndTopic(testQuote, testTopic)).thenReturn(Optional.empty());
+        when(testRepo.save(testDto.toEntity())).thenReturn(testEntry);
+        JournalEntryService testService = new JournalEntryService(testRepo);
+
+        // When
+        JournalEntryDto actualResult = testService.createJournalEntry(testDto);
+
+        // Then
+        assertThat(actualResult).isEqualTo(testDto);
+
+        }
+    }
