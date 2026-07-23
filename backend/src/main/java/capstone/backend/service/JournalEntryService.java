@@ -1,6 +1,7 @@
 package capstone.backend.service;
 
 import capstone.backend.dto.JournalEntryDto;
+import capstone.backend.entity.JournalEntry;
 import capstone.backend.repo.JournalEntryRepo;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,10 @@ public class JournalEntryService {
                 .stream()
                 .map(JournalEntryDto::fromEntity)
                 .toList();
+    }
+
+    public JournalEntryDto createJournalEntry(JournalEntryDto journalEntryDto){
+        JournalEntry createdJournalEntry = journalEntryRepo.save(journalEntryDto.toEntity());
+        return JournalEntryDto.fromEntity(createdJournalEntry);
     }
 }

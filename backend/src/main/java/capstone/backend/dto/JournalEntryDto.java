@@ -11,4 +11,12 @@ public record JournalEntryDto(String quote,
     public static JournalEntryDto fromEntity(JournalEntry entry) {
         return new JournalEntryDto(entry.getQuote(), entry.getTopic());
     }
+
+    public JournalEntry toEntity() {
+        return JournalEntry
+                .builder()
+                .quote(this.quote())
+                .topic(this.topic())
+                .build();
+    }
 }
