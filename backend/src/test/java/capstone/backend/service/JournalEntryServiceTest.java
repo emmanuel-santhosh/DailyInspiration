@@ -131,6 +131,28 @@ class JournalEntryServiceTest {
 
         // Then
         assertThat(actualResult).isEqualTo(testDto);
-
         }
+
+    @Test
+    void createJournalEntry_shouldReturnExistingDto_whenMatchingJournalEntryPresent() {
+        // Given
+        String testQuote = "q1";
+        String testTopic = "t1";
+        JournalEntryDto testDto = new JournalEntryDto(testQuote, testTopic);
+        JournalEntry testEntry = JournalEntry.builder()
+                .quote(testQuote)
+                .topic(testTopic)
+                .build();
+
+        JournalEntryRepo testRepo = mock(JournalEntryRepo.class);
+        // This line mocks matching JournalEntry present
+        when(testRepo.findJournalEntryByQuoteAndTopic(testQuote, testTopic)).thenReturn(Optional.of(testEntry));
+        JournalEntryService testService = new JournalEntryService(testRepo);
+
+        // When
+        JournalEntryDto actualResult = testService.createJournalEntry(testDto);
+
+        // Then
+        assertThat(actualResult).isEqualTo(testDto);
+    }
     }
