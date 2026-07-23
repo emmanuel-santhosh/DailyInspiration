@@ -4,12 +4,12 @@ import capstone.backend.dto.JournalEntryDto;
 import capstone.backend.entity.JournalEntry;
 import capstone.backend.repo.JournalEntryRepo;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class JournalEntryServiceTest {
 
@@ -29,5 +29,41 @@ class JournalEntryServiceTest {
         List<JournalEntryDto> actualTestResult = testJEService.findAllJournalEntries();
         // Then
         assertThat(actualTestResult).isEqualTo(expectedTestResult);
+    }
+
+    @Test
+    void findAllJournalEntries_shouldReturnListOfJournalEntryDto_whenRepoNotEmpty() {
+        // Given
+        String quote1 = "q1";
+        String topic1 = "t1";
+        JournalEntry testEntry1 = JournalEntry.builder().quote(quote1).topic(topic1).build();
+
+        String quote2 = "q2";
+        String topic2 = "t2";
+        JournalEntry testEntry2 = JournalEntry.builder().quote(quote2).topic(topic2).build();
+
+        List<JournalEntry> repoResponse = List.of(testEntry1, testEntry2);
+        JournalEntryRepo testJERepo = mock(JournalEntryRepo.class);
+        when(testJERepo.findAll()).thenReturn(repoResponse);
+
+        JournalEntryService testJEService = new JournalEntryService(testJERepo);
+
+        /*
+        * Strictly speaking, fromEntity has been tested separately and is therefore not needed.
+        * However, if a function such as UUID generator or any other with non-deterministic output is to be
+        * tested, this is the way.
+        * */
+        try (MockedStatic<JournalEntryDto> mockedJEDto = mockStatic(JournalEntryDto.class)){
+            JournalEntryDto testEntryDto1 = new JournalEntryDto(quote1, topic1);
+            JournalEntryDto testEntryDto2 = new JournalEntryDto(quote2, topic2);
+            // When
+            mockedJEDto.when(()-> JournalEntryDto.fromEntity(testEntry1)).thenReturn(testEntryDto1);
+            mockedJEDto.when(()->JournalEntryDto.fromEntity(testEntry2)).thenReturn(testEntryDto2);
+            List<JournalEntryDto> actualTestResult = testJEService.findAllJournalEntries();
+            // Then
+            assertThat(actualTestResult).isEqualTo(List.of
+                    (new JournalEntryDto(quote1,topic1),
+                            new JournalEntryDto(quote2,topic2)));
+        }
     }
 }
