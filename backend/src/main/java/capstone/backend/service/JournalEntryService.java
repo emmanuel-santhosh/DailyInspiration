@@ -6,6 +6,7 @@ import capstone.backend.repo.JournalEntryRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JournalEntryService {
@@ -25,7 +26,9 @@ public class JournalEntryService {
     }
 
     public JournalEntryDto createJournalEntry(JournalEntryDto journalEntryDto){
-        JournalEntry createdJournalEntry = journalEntryRepo.save(journalEntryDto.toEntity());
+        Optional<JournalEntry> possibleExistingEntry = journalEntryRepo.findJournalEntryByQuoteAndTopic(journalEntryDto.quote(), journalEntryDto.topic());
+        JournalEntry createdJournalEntry = possibleExistingEntry
+                        .orElse(journalEntryRepo.save(journalEntryDto.toEntity()));
         return JournalEntryDto.fromEntity(createdJournalEntry);
     }
 }
