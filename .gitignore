@@ -56,3 +56,6 @@
 /backend/.settings
 /backend/.springBeans
 /backend/.sts4-cache
+
+# mise (dev tool version manager)
+mise.toml
