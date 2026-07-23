@@ -9,7 +9,7 @@ import java.util.Objects;
 @Table(name = "journal_entries")
 @Data
 @Builder
-@NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 public class JournalEntry {
 
