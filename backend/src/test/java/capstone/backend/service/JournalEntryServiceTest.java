@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -65,5 +66,46 @@ class JournalEntryServiceTest {
                     (new JournalEntryDto(quote1,topic1),
                             new JournalEntryDto(quote2,topic2)));
         }
+    }
+
+    @Test
+    void findJournalEntryByQuoteAndTopic_shouldReturnEmpty_IfJournalEntryNotPresent() {
+        // Given
+        String testQuote = "q";
+        String testTopic = "t1";
+        JournalEntryRepo journalEntryRepo = mock(JournalEntryRepo.class);
+        when(journalEntryRepo.findJournalEntryByQuoteAndTopic(testQuote,testTopic)).thenReturn(Optional.empty());
+
+        JournalEntryService testService = new JournalEntryService(journalEntryRepo);
+        // When
+        Optional<JournalEntry> actualResult = testService.findJournalEntryByQuoteAndTopic(testQuote,testTopic);
+        // Then
+        assertThat(actualResult).isEmpty();
+    }
+
+    @Test
+    void findJournalEntryByQuoteAndTopic_shouldReturnJournalEntry_IfJournalEntryPresent() {
+        // Given
+        String dtoQuote = "q1";
+        String dtoTopic = "t1";
+        JournalEntry testEntry = JournalEntry.builder()
+                .quote(dtoQuote)
+                .topic(dtoTopic)
+                .build();
+
+        /*
+        * Existing variables are "blindly" reused (without retyping) to reduce typing errors.
+        * Although test variables are marked as redundant, they are used in function calls for readability
+        * */
+        String testQuote = dtoQuote;
+        String testTopic = dtoTopic;
+        JournalEntryRepo journalEntryRepo = mock(JournalEntryRepo.class);
+        when(journalEntryRepo.findJournalEntryByQuoteAndTopic(testQuote,testTopic)).thenReturn(Optional.of(testEntry));
+
+        JournalEntryService testService = new JournalEntryService(journalEntryRepo);
+        // When
+        Optional<JournalEntry> actualResult = testService.findJournalEntryByQuoteAndTopic(testQuote,testTopic);
+        // Then
+        assertThat(actualResult).isNotEmpty();
     }
 }

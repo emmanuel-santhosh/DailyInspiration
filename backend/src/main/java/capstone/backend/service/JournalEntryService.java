@@ -17,7 +17,7 @@ public class JournalEntryService {
         this.journalEntryRepo = journalEntryRepo;
     }
 
-    private Optional<JournalEntry> findJournalEntryByQuoteAndTopic(String quote, String topic){
+    protected Optional<JournalEntry> findJournalEntryByQuoteAndTopic(String quote, String topic){
         return journalEntryRepo.findJournalEntryByQuoteAndTopic(quote, topic);
     }
 
