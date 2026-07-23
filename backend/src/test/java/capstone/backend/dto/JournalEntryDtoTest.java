@@ -22,7 +22,26 @@ class JournalEntryDtoTest {
         JournalEntryDto actualJEDto = JournalEntryDto.fromEntity(testEntry);
 
         // Then
-        assertThat(actualJEDto.quote().equals(testEntryQuote));
-        assertThat(actualJEDto.topic().equals(testEntryTopic));
+        assertThat(actualJEDto.quote()).isEqualTo(testEntryQuote);
+        assertThat(actualJEDto.topic()).isEqualTo(testEntryTopic);
+        // Assert that actual is equal to expected
+
     }
+
+    @Test
+    void fromEntity_shouldReturnDtoWithNullOrEmptyAttributes_forJournalEntryWithNullOrEmptyAttributes() {
+        // Given
+        JournalEntry testEntry = JournalEntry
+                .builder()
+                .topic("")
+                .build();
+
+        // When
+        JournalEntryDto actualJEDto = JournalEntryDto.fromEntity(testEntry);
+
+        // Then
+        assertThat(actualJEDto.quote()).isNull();
+        assertThat(actualJEDto.topic()).isEmpty();
+    }
+
 }
