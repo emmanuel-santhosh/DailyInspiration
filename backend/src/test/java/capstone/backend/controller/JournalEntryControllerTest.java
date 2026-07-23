@@ -17,7 +17,6 @@ import java.util.List;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-
 class JournalEntryControllerTest {
 
     @Autowired
