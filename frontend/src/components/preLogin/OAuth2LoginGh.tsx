@@ -9,6 +9,9 @@ export default function OAuth2LoginGh() {
 
     return(
         <>
+            <header>
+                <h2>Performing login...</h2>
+            </header>
         </>
     )
 }

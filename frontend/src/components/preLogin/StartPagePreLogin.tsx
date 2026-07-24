@@ -1,4 +1,4 @@
-export default function HomePagePreLogin() {
+export default function StartPagePreLogin() {
     return (
         <header>
             <h1>Welcome !</h1>
