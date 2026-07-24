@@ -113,7 +113,7 @@ class JournalEntryServiceTest {
 
         assertThat(actualResult)
                 .hasValueSatisfying(journalEntry -> {
-                    assertThat(actualResult).isInstanceOf(JournalEntry.class);
+                    assertThat(actualResult).get().isInstanceOf(JournalEntry.class);
                     assertThat(actualResult.get().getQuote()).isEqualTo(testQuote);
                     assertThat(actualResult.get().getTopic()).isEqualTo((testTopic));
                     assertThat(actualResult.get().getId()).isNull();
