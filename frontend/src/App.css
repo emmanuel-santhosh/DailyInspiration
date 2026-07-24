@@ -12,10 +12,14 @@ div {
     gap: 0.5rem;
 }
 
+.pageContainerPostLogin{
+    flex-direction: row;
+}
+
 button {
     padding: .5rem;
 }
 
-.firstChild {
+.firstChildPreLogin {
     margin-top: 1rem;
 }

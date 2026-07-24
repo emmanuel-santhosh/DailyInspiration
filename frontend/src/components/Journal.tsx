@@ -12,7 +12,7 @@ export default function Journal(props: Readonly<userProps>) {
                 <h1>Welcome, {props.user} !</h1>
             </header>
             <div className="pageContainerPostLogin">
-                <button className={"firstChild"}>Make new entry</button>
+                <button className={"firstChildJournal"}>Create new entry</button>
                 <button>Retrieve existing entries</button>
                 <button>Make changes to existing entry</button>
                 <button>Delete entries</button>

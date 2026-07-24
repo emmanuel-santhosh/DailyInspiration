@@ -8,7 +8,7 @@ export default function Login() {
                 <h1>Welcome !</h1>
             </header>
             <div className="pageContainerPreLogin">
-                <button className={"firstChild"}
+                <button className={"firstChildPreLogin"}
                         onClick={oAuth2Github_login}>Authenticate via GitHub
                 </button>
                 <button>Create account</button>
