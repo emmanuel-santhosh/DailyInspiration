@@ -1,7 +1,7 @@
 import './App.css'
 import {useEffect, useState} from "react";
-import Login from "./components/preLogin/Login.tsx";
-import Journal from "./components/postLogin/Journal.tsx";
+import BasePreLogin from "./components/preLogin/BasePreLogin.tsx";
+import BasePostLogin from "./components/postLogin/BasePostLogin.tsx";
 import type {userType} from "./types/User.ts";
 import {loadUser} from "./services/loadUser.ts";
 
@@ -24,10 +24,10 @@ function App() {
     return (
         <>
             {typeof user != "string" &&
-                <Login></Login>
+                <BasePreLogin></BasePreLogin>
             }
             {typeof user === "string" &&
-                <Journal user={user}></Journal>
+                <BasePostLogin></BasePostLogin>
             }
             <footer>
                 <small>© Emmanuel Santhosh 2026. All rights reserved.</small>
