@@ -1,12 +1,12 @@
-import {oAuth2Github_logout} from "../services/oAuth2Github.ts";
-import type {userType} from "../types/User.ts";
+import {oAuth2Github_logout} from "../../services/oAuth2Github.ts";
+import type {userType} from "../../types/User.ts";
 
 type userProps = {
     user: userType
 }
 
 export default function Journal(props: Readonly<userProps>) {
-    return(
+    return (
         <>
             <header>
                 <h1>Welcome, {props.user} !</h1>

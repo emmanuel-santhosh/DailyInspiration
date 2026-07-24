@@ -1,7 +1,7 @@
 import './App.css'
 import {useEffect, useState} from "react";
-import Login from "./components/Login.tsx";
-import Journal from "./components/Journal.tsx";
+import Login from "./components/preLogin/Login.tsx";
+import Journal from "./components/postLogin/Journal.tsx";
 import type {userType} from "./types/User.ts";
 import {loadUser} from "./services/loadUser.ts";
 
