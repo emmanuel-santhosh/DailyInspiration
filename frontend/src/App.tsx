@@ -29,6 +29,9 @@ function App() {
             {typeof user === "string" &&
                 <Journal user={user}></Journal>
             }
+            <footer>
+                <small>© Emmanuel Santhosh 2026. All rights reserved.</small>
+            </footer>
         </>
     )
 }
