@@ -5,9 +5,6 @@ export default function Login() {
 
     return (
         <>
-            <header>
-                <h1>Welcome !</h1>
-            </header>
             <NavBarPreLogin></NavBarPreLogin>
             <RoutersPreLogin></RoutersPreLogin>
         </>
