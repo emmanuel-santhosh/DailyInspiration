@@ -1,4 +1,4 @@
-import './App.css'
+import './styles/App.css'
 import {useEffect, useState} from "react";
 import BasePreLogin from "./components/preLogin/BasePreLogin.tsx";
 import BasePostLogin from "./components/postLogin/BasePostLogin.tsx";
