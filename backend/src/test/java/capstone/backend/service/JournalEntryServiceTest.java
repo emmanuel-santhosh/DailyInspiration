@@ -106,17 +106,14 @@ class JournalEntryServiceTest {
         // When
         Optional<JournalEntry> actualResult = testService.findJournalEntryByQuoteAndTopic(testQuote, testTopic);
         // Then
-        assertThat(actualResult)
-                .isPresent()
-                .get()
-                .isInstanceOf(JournalEntry.class);
-
         /*
-         * Multiple attributes can be tested in one statement using lambda
+         * Multiple attributes can be tested in one statement using
+         * the below lambda
          * */
 
         assertThat(actualResult)
-                .hasValueSatisfying((journalEntry) -> {
+                .hasValueSatisfying(journalEntry -> {
+                    assertThat(actualResult).isInstanceOf(JournalEntry.class);
                     assertThat(actualResult.get().getQuote()).isEqualTo(testQuote);
                     assertThat(actualResult.get().getTopic()).isEqualTo((testTopic));
                     assertThat(actualResult.get().getId()).isNull();
