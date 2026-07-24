@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -36,7 +37,7 @@ class JournalEntryControllerTest {
         String expectedJson = objectMapper.writeValueAsString(List.of());
         // When
         mockMvc.perform(MockMvcRequestBuilders.get(baseURI))
-        // Then
+                // Then
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content()
                         .json(expectedJson));
@@ -48,9 +49,9 @@ class JournalEntryControllerTest {
         // Given
         JournalEntry testEntry =
                 JournalEntry.builder()
-                .quote("q1")
-                .topic("t1")
-                .build();
+                        .quote("q1")
+                        .topic("t1")
+                        .build();
         testJERepo.save(testEntry);
         // The Get method returns a list of DTOs, not Entities !!!
         JournalEntryDto testJEDto = JournalEntryDto.fromEntity(testEntry);
@@ -58,9 +59,47 @@ class JournalEntryControllerTest {
 
         // When
         mockMvc.perform(MockMvcRequestBuilders.get(baseURI))
-        // Then
+                // Then
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content()
                         .json(expectedJson));
+    }
+
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void createJournalEntry_JournalEntryDoesNotExistInRepo_shouldReturnGivenDto_WithStatusCreated() throws Exception {
+        // Given
+        String testQuote = "q1";
+        String testTopic = "t1";
+        JournalEntryDto testDto = new JournalEntryDto(testQuote, testTopic);
+        String testDtoAsJson = objectMapper.writeValueAsString(testDto);
+        // When
+        mockMvc.perform(MockMvcRequestBuilders.post(baseURI)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testDtoAsJson))
+                // Then
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().json(testDtoAsJson));
+    }
+
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void createJournalEntry_JournalEntryExistsInRepo_shouldReturnGivenDto_WithStatusCreated() throws Exception {
+        // Given
+        String testQuote = "q1";
+        String testTopic = "t1";
+        JournalEntryDto testDto = new JournalEntryDto(testQuote, testTopic);
+        /*
+         * This line is the single difference to prev. test         *
+         */
+        testJERepo.save(testDto.toEntity());
+        String testDtoAsJson = objectMapper.writeValueAsString(testDto);
+        // When
+        mockMvc.perform(MockMvcRequestBuilders.post(baseURI)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(testDtoAsJson))
+                // Then
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().json(testDtoAsJson));
     }
 }
