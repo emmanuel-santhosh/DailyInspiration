@@ -10,5 +10,6 @@ export const loadUser = (props: Readonly<userProps>) => {
         .then(response => {
                 props.setUser(response.data);
             }
-        );
+        )
+        .catch(() => props.setUser(undefined));
 }
