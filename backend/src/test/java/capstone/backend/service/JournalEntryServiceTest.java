@@ -24,8 +24,8 @@ class JournalEntryServiceTest {
         JournalEntryService testJEService = new JournalEntryService(testJERepo);
         List<JournalEntryDto> expectedTestResult = List.of();
         /*
-        * fromEntity is not mocked in this case it isn't invoked
-        * */
+         * fromEntity is not mocked in this case it isn't invoked
+         * */
         // When
         List<JournalEntryDto> actualTestResult = testJEService.findAllJournalEntries();
         // Then
@@ -50,21 +50,21 @@ class JournalEntryServiceTest {
         JournalEntryService testJEService = new JournalEntryService(testJERepo);
 
         /*
-        * Strictly speaking, fromEntity has been tested separately and is therefore not needed.
-        * However, if a function such as UUID generator or any other with non-deterministic output is to be
-        * tested, this is the way.
-        * */
-        try (MockedStatic<JournalEntryDto> mockedJEDto = mockStatic(JournalEntryDto.class)){
+         * Strictly speaking, fromEntity has been tested separately and is therefore not needed.
+         * However, if a function such as UUID generator or any other with non-deterministic output is to be
+         * tested, this is the way.
+         * */
+        try (MockedStatic<JournalEntryDto> mockedJEDto = mockStatic(JournalEntryDto.class)) {
             JournalEntryDto testEntryDto1 = new JournalEntryDto(quote1, topic1);
             JournalEntryDto testEntryDto2 = new JournalEntryDto(quote2, topic2);
             // When
-            mockedJEDto.when(()-> JournalEntryDto.fromEntity(testEntry1)).thenReturn(testEntryDto1);
-            mockedJEDto.when(()->JournalEntryDto.fromEntity(testEntry2)).thenReturn(testEntryDto2);
+            mockedJEDto.when(() -> JournalEntryDto.fromEntity(testEntry1)).thenReturn(testEntryDto1);
+            mockedJEDto.when(() -> JournalEntryDto.fromEntity(testEntry2)).thenReturn(testEntryDto2);
             List<JournalEntryDto> actualTestResult = testJEService.findAllJournalEntries();
             // Then
             assertThat(actualTestResult).isEqualTo(List.of
-                    (new JournalEntryDto(quote1,topic1),
-                            new JournalEntryDto(quote2,topic2)));
+                    (new JournalEntryDto(quote1, topic1),
+                            new JournalEntryDto(quote2, topic2)));
         }
     }
 
@@ -74,11 +74,11 @@ class JournalEntryServiceTest {
         String testQuote = "q";
         String testTopic = "t1";
         JournalEntryRepo journalEntryRepo = mock(JournalEntryRepo.class);
-        when(journalEntryRepo.findJournalEntryByQuoteAndTopic(testQuote,testTopic)).thenReturn(Optional.empty());
+        when(journalEntryRepo.findJournalEntryByQuoteAndTopic(testQuote, testTopic)).thenReturn(Optional.empty());
 
         JournalEntryService testService = new JournalEntryService(journalEntryRepo);
         // When
-        Optional<JournalEntry> actualResult = testService.findJournalEntryByQuoteAndTopic(testQuote,testTopic);
+        Optional<JournalEntry> actualResult = testService.findJournalEntryByQuoteAndTopic(testQuote, testTopic);
         // Then
         assertThat(actualResult).isEmpty();
     }
@@ -94,19 +94,33 @@ class JournalEntryServiceTest {
                 .build();
 
         /*
-        * Existing variables are "blindly" reused (without retyping) to reduce typing errors.
-        * Although test variables are marked as redundant, they are used in function calls for readability
-        * */
+         * Existing variables are "blindly" reused (without retyping) to reduce typing errors.
+         * Although test variables are marked as redundant, they are used in function calls for readability
+         * */
         String testQuote = dtoQuote;
         String testTopic = dtoTopic;
         JournalEntryRepo journalEntryRepo = mock(JournalEntryRepo.class);
-        when(journalEntryRepo.findJournalEntryByQuoteAndTopic(testQuote,testTopic)).thenReturn(Optional.of(testEntry));
+        when(journalEntryRepo.findJournalEntryByQuoteAndTopic(testQuote, testTopic)).thenReturn(Optional.of(testEntry));
 
         JournalEntryService testService = new JournalEntryService(journalEntryRepo);
         // When
-        Optional<JournalEntry> actualResult = testService.findJournalEntryByQuoteAndTopic(testQuote,testTopic);
+        Optional<JournalEntry> actualResult = testService.findJournalEntryByQuoteAndTopic(testQuote, testTopic);
         // Then
-        assertThat(actualResult).isNotEmpty();
+        assertThat(actualResult)
+                .isPresent()
+                .get()
+                .isInstanceOf(JournalEntry.class);
+
+        /*
+         * Multiple attributes can be tested in one statement using lambda
+         * */
+
+        assertThat(actualResult)
+                .hasValueSatisfying((journalEntry) -> {
+                    assertThat(actualResult.get().getQuote()).isEqualTo(testQuote);
+                    assertThat(actualResult.get().getTopic()).isEqualTo((testTopic));
+                    assertThat(actualResult.get().getId()).isNull();
+                });
     }
 
     @Test
@@ -116,9 +130,15 @@ class JournalEntryServiceTest {
         String testTopic = "t1";
         JournalEntryDto testDto = new JournalEntryDto(testQuote, testTopic);
         JournalEntry testEntry = JournalEntry.builder()
-                                    .quote(testQuote)
-                                    .topic(testTopic)
-                                    .build();
+                .quote(testQuote)
+                .topic(testTopic)
+                .build();
+
+        /*
+         * To verify the functions under "Then" are called exactly the specified
+         * number of times
+         * */
+        int expectednoOfFunctionCalls = 1;
 
         JournalEntryRepo testRepo = mock(JournalEntryRepo.class);
         // This line mocks no matching JournalEntry present
@@ -131,7 +151,9 @@ class JournalEntryServiceTest {
 
         // Then
         assertThat(actualResult).isEqualTo(testDto);
-        }
+        verify(testRepo, times(expectednoOfFunctionCalls)).findJournalEntryByQuoteAndTopic(testQuote, testTopic);
+        verify(testRepo, times(expectednoOfFunctionCalls)).save(testDto.toEntity());
+    }
 
     @Test
     void createJournalEntry_shouldReturnExistingDto_whenMatchingJournalEntryPresent() {
@@ -146,7 +168,7 @@ class JournalEntryServiceTest {
 
         JournalEntryRepo testRepo = mock(JournalEntryRepo.class);
         // This line mocks matching JournalEntry present
-        when(testRepo.findJournalEntryByQuoteAndTopic(testQuote, testTopic)).thenReturn(Optional.of(testEntry));
+        when(testRepo.findJournalEntryByQuoteAndTopic(testQuote, testTopic)).thenReturn(Optional.ofNullable(testEntry));
         JournalEntryService testService = new JournalEntryService(testRepo);
 
         // When
@@ -154,5 +176,8 @@ class JournalEntryServiceTest {
 
         // Then
         assertThat(actualResult).isEqualTo(testDto);
+        // verify(mock) is identical to verify(mock, times(1))
+        verify(testRepo).findJournalEntryByQuoteAndTopic(testQuote, testTopic);
+        verify(testRepo, never()).save(testDto.toEntity());
     }
-    }
+}
