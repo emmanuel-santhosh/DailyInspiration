@@ -7,22 +7,20 @@ import DeleteEntries from "./DeleteEntries.tsx";
 import Logout from "./Logout.tsx";
 
 export default function RoutersPostLogin() {
-    return(
-        <>
-            <Routes>
-                <Route path={"/"}
-                element={<StartPagePostLogin/>}>Start</Route>
-                <Route path={"/create"}
-                       element={<CreateJournalEntry/>}></Route>
-                <Route path={"/read"}
-                       element={<ReadJournalEntries/>}></Route>
-                <Route path={"/update"}
-                       element={<ModifyEntries/>}></Route>
-                <Route path={"/delete"}
-                       element={<DeleteEntries/>}></Route>
-                <Route path={"/logout"}
-                       element={<Logout/>}></Route>
-            </Routes>
-        </>
+    return (
+        <Routes>
+            <Route path={"/"}
+                   element={<StartPagePostLogin/>}>Start</Route>
+            <Route path={"/create"}
+                   element={<CreateJournalEntry/>}></Route>
+            <Route path={"/read"}
+                   element={<ReadJournalEntries/>}></Route>
+            <Route path={"/update"}
+                   element={<ModifyEntries/>}></Route>
+            <Route path={"/delete"}
+                   element={<DeleteEntries/>}></Route>
+            <Route path={"/logout"}
+                   element={<Logout/>}></Route>
+        </Routes>
     )
 }

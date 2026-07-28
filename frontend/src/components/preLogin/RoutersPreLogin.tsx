@@ -4,13 +4,11 @@ import StartPagePreLogin from "./StartPagePreLogin.tsx";
 
 export default function RoutersPreLogin() {
     return (
-        <>
-            <Routes>
-                <Route path={"/"}
-                       element={<StartPagePreLogin/>}></Route>
-                <Route path="/oauth2GitHub"
-                       element={<OAuth2LoginGh/>}></Route>
-            </Routes>
-        </>
+        <Routes>
+            <Route path={"/"}
+                   element={<StartPagePreLogin/>}></Route>
+            <Route path="/oauth2GitHub"
+                   element={<OAuth2LoginGh/>}></Route>
+        </Routes>
     )
 }

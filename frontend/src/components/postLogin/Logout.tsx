@@ -6,10 +6,8 @@ export default function Logout() {
         oAuth2Github_logout();
     }, []);
     return (
-        <>
-            <header>
-                <h2>Logging out...</h2>
-            </header>
-        </>
+        <header>
+            <h2>Logging out...</h2>
+        </header>
     )
 }

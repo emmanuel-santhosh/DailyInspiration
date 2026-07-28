@@ -4,11 +4,9 @@ import type {userType} from "../../types/User.ts";
 
 export default function StartPagePostLogin() {
 
-    const user:userType = useContext(UserContext);
+    const user: userType = useContext(UserContext);
 
-    return(
-        <>
-            <h1>Welcome, {user}!</h1>
-        </>
+    return (
+        <h1>Welcome, {user}!</h1>
     )
 }
