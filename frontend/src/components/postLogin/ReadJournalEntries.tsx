@@ -43,6 +43,9 @@ export default function ReadJournalEntries() {
                 <section className={"journal__entry__section"}>
                     {
                         journalEntries.map((journalEntry, index) =>
+                            /*
+                            * https://react.dev/learn/rendering-lists
+                            * */
                             <article className={"journal__entry__holder"}
                                      key={index + 1}
                                      id={`journal__entry__${index + 1}`}>
