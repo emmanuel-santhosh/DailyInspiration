@@ -1,21 +1,39 @@
 import {useForm, type SubmitHandler} from "react-hook-form"
-import {type JournalEntryDto, MAX_LENGTH_QUOTE, MAX_LENGTH_TOPIC} from "../../types/JournalEntryDto.ts";
+import {
+    BASE_BACKEND_URI,
+    type JournalEntryDto,
+    MAX_LENGTH_QUOTE,
+    MAX_LENGTH_TOPIC
+} from "../../types/JournalEntryDto.ts";
+import axios from "axios";
 
 export default function CreateJournalEntry() {
 
     const {
         register,
         handleSubmit,
-        formState: {errors}
-    } = useForm<JournalEntryDto>({
-        defaultValues: {
-            quote: "Pity ? It was pity that stayed Bilbo's hand.",
-            topic: "Gandalf, pity, mercy"
-        }
-    });
+        formState: {errors},
+        reset
+    } = useForm<JournalEntryDto>();
 
     const onSubmit: SubmitHandler<JournalEntryDto> =
-        (UserEntry) => console.log(UserEntry);
+        async (data: JournalEntryDto) => {
+            try {
+                // await PAUSES here, waiting for server response
+                // Meanwhile, the UI stays responsive
+                const response = await axios.post(BASE_BACKEND_URI, data);
+
+                // Once server responds, this line runs
+                console.log("Saved successfully:", response.data);
+                alert("Data saved!");
+                reset();
+
+            } catch (error) {
+                // If network error or server error occurs
+                console.error("Failed to save:", error);
+                alert("Failed to save data");
+            }
+        };
 
     return (
         <>
@@ -24,9 +42,11 @@ export default function CreateJournalEntry() {
                     Jot down your thoughts
                 </h2>
             </header>
-            // "handleSubmit" will validate your inputs before invoking "onSubmit"
+            {/*
+            "handleSubmit" will validate your inputs before invoking "onSubmit"
+            */}
             <form onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor={"quote"}>Quote:</label>
+                <label htmlFor={"quote"}>Quote</label>
                 <br/>
                 <input id={"quote"}
                        {...register(
@@ -34,29 +54,31 @@ export default function CreateJournalEntry() {
                            {
                                required: "This field is required",
                                maxLength: {
-                                   value:MAX_LENGTH_QUOTE,
+                                   value: MAX_LENGTH_QUOTE,
                                    message: "Max length is " + MAX_LENGTH_QUOTE
                                }
                            }
                        )
                        }
-                       size={MAX_LENGTH_QUOTE*0.2}
+                       size={MAX_LENGTH_QUOTE * 0.2}
+                       placeholder={"Pity ? It was pity that stayed Bilbo's hand."}
                 />
                 <br/>
                 <span>{errors.quote?.message}</span>
                 <br/>
-                <label htmlFor={"topic"}>Topic:</label>
+                <label htmlFor={"topic"}>Topic</label>
                 <br/>
                 <input id={"topic"}
                        {...register("topic",
                            {
                                required: "This field is required",
                                maxLength: {
-                                   value:MAX_LENGTH_TOPIC,
+                                   value: MAX_LENGTH_TOPIC,
                                    message: "Max length is " + MAX_LENGTH_TOPIC
                                }
                            })}
-                       size={MAX_LENGTH_TOPIC*0.4}
+                       size={MAX_LENGTH_TOPIC * 0.4}
+                       placeholder={"Pity"}
                 />
                 <br/>
                 <span>{errors.topic?.message}</span>
