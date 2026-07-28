@@ -10,7 +10,7 @@ export default function RoutersPostLogin() {
     return (
         <Routes>
             <Route path={"/"}
-                   element={<StartPagePostLogin/>}>Start</Route>
+                   element={<StartPagePostLogin/>}></Route>
             <Route path={"/create"}
                    element={<CreateJournalEntry/>}></Route>
             <Route path={"/read"}
