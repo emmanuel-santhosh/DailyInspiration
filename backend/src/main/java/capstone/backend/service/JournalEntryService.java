@@ -1,12 +1,15 @@
 package capstone.backend.service;
 
-import capstone.backend.dto.JournalEntryDto;
+import capstone.backend.dto.JournalEntryRequestDto;
+import capstone.backend.dto.JournalEntryResponseDto;
 import capstone.backend.entity.JournalEntry;
 import capstone.backend.repo.JournalEntryRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class JournalEntryService {
@@ -21,24 +24,24 @@ public class JournalEntryService {
         return journalEntryRepo.findJournalEntryByQuoteAndTopic(quote, topic);
     }
 
-    public List<JournalEntryDto> findAllJournalEntries() {
+    public List<JournalEntryResponseDto> findAllJournalEntries() {
         return journalEntryRepo
                 .findAll()
                 .stream()
-                .map(JournalEntryDto::fromEntity)
+                .map(JournalEntryResponseDto::fromEntity)
                 .toList();
     }
 
-    public JournalEntryDto createJournalEntry(JournalEntryDto journalEntryDto) {
-        Optional<JournalEntry> possibleExistingEntry = findJournalEntryByQuoteAndTopic(journalEntryDto.quote(), journalEntryDto.topic());
+    public JournalEntryResponseDto createJournalEntry(JournalEntryRequestDto journalEntryRequestDto) {
+        Optional<JournalEntry> possibleExistingEntry = findJournalEntryByQuoteAndTopic(journalEntryRequestDto.quote(), journalEntryRequestDto.topic());
         JournalEntry createdJournalEntry = possibleExistingEntry
-                .orElseGet(() -> journalEntryRepo.save(journalEntryDto.toEntity()));
+                .orElseGet(() -> journalEntryRepo.save(journalEntryRequestDto.toEntity()));
         /*
          * orElse vs orElseGet
          * orElse is eager evaluation - first computed, then the Optional object is null-checked
          * This was why the save operation on Repo was always executed !!
          * orElseGet is lazy evaluation - computed after the Optional object is null-checked
          * */
-        return JournalEntryDto.fromEntity(createdJournalEntry);
+        return JournalEntryResponseDto.fromEntity(createdJournalEntry);
     }
 }
