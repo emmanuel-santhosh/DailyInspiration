@@ -1,9 +1,11 @@
 package capstone.backend.dto;
 
 import capstone.backend.entity.JournalEntry;
+import lombok.*;
 
+@With
 public record JournalEntryResponseDto(
-        Long Id,
+        Long id,
         String quote,
         String topic) {
     /*

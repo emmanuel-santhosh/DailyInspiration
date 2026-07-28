@@ -1,6 +1,7 @@
 package capstone.backend.service;
 
-import capstone.backend.dto.JournalEntryDto;
+import capstone.backend.dto.JournalEntryRequestDto;
+import capstone.backend.dto.JournalEntryResponseDto;
 import capstone.backend.entity.JournalEntry;
 import capstone.backend.repo.JournalEntryRepo;
 import org.junit.jupiter.api.Test;
@@ -22,12 +23,12 @@ class JournalEntryServiceTest {
         when(testJERepo.findAll()).thenReturn(repoResponse);
 
         JournalEntryService testJEService = new JournalEntryService(testJERepo);
-        List<JournalEntryDto> expectedTestResult = List.of();
+        List<JournalEntryResponseDto> expectedTestResult = List.of();
         /*
          * fromEntity is not mocked in this case it isn't invoked
          * */
         // When
-        List<JournalEntryDto> actualTestResult = testJEService.findAllJournalEntries();
+        List<JournalEntryResponseDto> actualTestResult = testJEService.findAllJournalEntries();
         // Then
         assertThat(actualTestResult).isEqualTo(expectedTestResult);
     }
@@ -35,13 +36,15 @@ class JournalEntryServiceTest {
     @Test
     void findAllJournalEntries_shouldReturnListOfJournalEntryDto_whenRepoNotEmpty() {
         // Given
+        Long id1 = 1L;
         String quote1 = "q1";
         String topic1 = "t1";
-        JournalEntry testEntry1 = JournalEntry.builder().quote(quote1).topic(topic1).build();
+        JournalEntry testEntry1 = JournalEntry.builder().id(id1).quote(quote1).topic(topic1).build();
 
+        Long id2 = 2L;
         String quote2 = "q2";
         String topic2 = "t2";
-        JournalEntry testEntry2 = JournalEntry.builder().quote(quote2).topic(topic2).build();
+        JournalEntry testEntry2 = JournalEntry.builder().id(id2).quote(quote2).topic(topic2).build();
 
         List<JournalEntry> repoResponse = List.of(testEntry1, testEntry2);
         JournalEntryRepo testJERepo = mock(JournalEntryRepo.class);
@@ -54,17 +57,17 @@ class JournalEntryServiceTest {
          * However, if a function such as UUID generator or any other with non-deterministic output is to be
          * tested, this is the way.
          * */
-        try (MockedStatic<JournalEntryDto> mockedJEDto = mockStatic(JournalEntryDto.class)) {
-            JournalEntryDto testEntryDto1 = new JournalEntryDto(quote1, topic1);
-            JournalEntryDto testEntryDto2 = new JournalEntryDto(quote2, topic2);
+        try (MockedStatic<JournalEntryResponseDto> mockedJEDto = mockStatic(JournalEntryResponseDto.class)) {
+            JournalEntryResponseDto testEntryDto1 = new JournalEntryResponseDto(id1, quote1, topic1);
+            JournalEntryResponseDto testEntryDto2 = new JournalEntryResponseDto(id2, quote2, topic2);
             // When
-            mockedJEDto.when(() -> JournalEntryDto.fromEntity(testEntry1)).thenReturn(testEntryDto1);
-            mockedJEDto.when(() -> JournalEntryDto.fromEntity(testEntry2)).thenReturn(testEntryDto2);
-            List<JournalEntryDto> actualTestResult = testJEService.findAllJournalEntries();
+            mockedJEDto.when(() -> JournalEntryResponseDto.fromEntity(testEntry1)).thenReturn(testEntryDto1);
+            mockedJEDto.when(() -> JournalEntryResponseDto.fromEntity(testEntry2)).thenReturn(testEntryDto2);
+            List<JournalEntryResponseDto> actualTestResult = testJEService.findAllJournalEntries();
             // Then
             assertThat(actualTestResult).isEqualTo(List.of
-                    (new JournalEntryDto(quote1, topic1),
-                            new JournalEntryDto(quote2, topic2)));
+                    (testEntryDto1,
+                    testEntryDto2));
         }
     }
 
@@ -125,11 +128,18 @@ class JournalEntryServiceTest {
         // Given
         String testQuote = "q1";
         String testTopic = "t1";
-        JournalEntryDto testDto = new JournalEntryDto(testQuote, testTopic);
+        JournalEntryRequestDto testRequestDto = new JournalEntryRequestDto(testQuote, testTopic);
+
+        Long testId = 1L;
         JournalEntry testEntry = JournalEntry.builder()
+                .id(testId)
                 .quote(testQuote)
                 .topic(testTopic)
                 .build();
+
+        JournalEntryResponseDto expectedResponseDto = new JournalEntryResponseDto(testId,
+                testQuote,
+                testTopic);
 
         /*
          * To verify the functions under "Then" are called exactly the specified
@@ -140,16 +150,16 @@ class JournalEntryServiceTest {
         JournalEntryRepo testRepo = mock(JournalEntryRepo.class);
         // This line mocks no matching JournalEntry present
         when(testRepo.findJournalEntryByQuoteAndTopic(testQuote, testTopic)).thenReturn(Optional.empty());
-        when(testRepo.save(testDto.toEntity())).thenReturn(testEntry);
+        when(testRepo.save(testRequestDto.toEntity())).thenReturn(testEntry);
         JournalEntryService testService = new JournalEntryService(testRepo);
 
         // When
-        JournalEntryDto actualResult = testService.createJournalEntry(testDto);
+        JournalEntryResponseDto actualResponseDto = testService.createJournalEntry(testRequestDto);
 
         // Then
-        assertThat(actualResult).isEqualTo(testDto);
+        assertThat(actualResponseDto).isEqualTo(expectedResponseDto);
         verify(testRepo, times(expectednoOfFunctionCalls)).findJournalEntryByQuoteAndTopic(testQuote, testTopic);
-        verify(testRepo, times(expectednoOfFunctionCalls)).save(testDto.toEntity());
+        verify(testRepo, times(expectednoOfFunctionCalls)).save(testRequestDto.toEntity());
     }
 
     @Test
@@ -157,11 +167,18 @@ class JournalEntryServiceTest {
         // Given
         String testQuote = "q1";
         String testTopic = "t1";
-        JournalEntryDto testDto = new JournalEntryDto(testQuote, testTopic);
+        JournalEntryRequestDto testDto = new JournalEntryRequestDto(testQuote, testTopic);
+
+        Long testId = 1L;
         JournalEntry testEntry = JournalEntry.builder()
+                .id(testId)
                 .quote(testQuote)
                 .topic(testTopic)
                 .build();
+
+        JournalEntryResponseDto expectedResponseDto = new JournalEntryResponseDto(testId,
+                testQuote,
+                testTopic);
 
         JournalEntryRepo testRepo = mock(JournalEntryRepo.class);
         // This line mocks matching JournalEntry present
@@ -169,10 +186,10 @@ class JournalEntryServiceTest {
         JournalEntryService testService = new JournalEntryService(testRepo);
 
         // When
-        JournalEntryDto actualResult = testService.createJournalEntry(testDto);
+        JournalEntryResponseDto actualResult = testService.createJournalEntry(testDto);
 
         // Then
-        assertThat(actualResult).isEqualTo(testDto);
+        assertThat(actualResult).isEqualTo(expectedResponseDto);
         // verify(mock) is identical to verify(mock, times(1))
         verify(testRepo).findJournalEntryByQuoteAndTopic(testQuote, testTopic);
         verify(testRepo, never()).save(testDto.toEntity());

@@ -1,6 +1,7 @@
 package capstone.backend.controller;
 
-import capstone.backend.dto.JournalEntryDto;
+import capstone.backend.dto.JournalEntryRequestDto;
+import capstone.backend.dto.JournalEntryResponseDto;
 import capstone.backend.entity.JournalEntry;
 import capstone.backend.repo.JournalEntryRepo;
 import org.junit.jupiter.api.Test;
@@ -54,7 +55,7 @@ class JournalEntryControllerTest {
                         .build();
         testJERepo.save(testEntry);
         // The Get method returns a list of DTOs, not Entities !!!
-        JournalEntryDto testJEDto = JournalEntryDto.fromEntity(testEntry);
+        JournalEntryResponseDto testJEDto = JournalEntryResponseDto.fromEntity(testEntry);
         String expectedJson = objectMapper.writeValueAsString(List.of(testJEDto));
 
         // When
@@ -71,7 +72,7 @@ class JournalEntryControllerTest {
         // Given
         String testQuote = "q1";
         String testTopic = "t1";
-        JournalEntryDto testDto = new JournalEntryDto(testQuote, testTopic);
+        JournalEntryRequestDto testDto = new JournalEntryRequestDto(testQuote, testTopic);
         String testDtoAsJson = objectMapper.writeValueAsString(testDto);
         // When
         mockMvc.perform(MockMvcRequestBuilders.post(baseURI)
@@ -88,7 +89,7 @@ class JournalEntryControllerTest {
         // Given
         String testQuote = "q1";
         String testTopic = "t1";
-        JournalEntryDto testDto = new JournalEntryDto(testQuote, testTopic);
+        JournalEntryRequestDto testDto = new JournalEntryRequestDto(testQuote, testTopic);
         /*
          * This line is the single difference to prev. test         *
          */
