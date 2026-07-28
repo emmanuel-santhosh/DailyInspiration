@@ -1,4 +1,22 @@
+import {useForm, type SubmitHandler} from "react-hook-form"
+import {type JournalEntryDto, MAX_LENGTH_QUOTE, MAX_LENGTH_TOPIC} from "../../types/JournalEntryDto.ts";
+
 export default function CreateJournalEntry() {
+
+    const {
+        register,
+        handleSubmit,
+        formState: {errors}
+    } = useForm<JournalEntryDto>({
+        defaultValues: {
+            quote: "Pity ? It was pity that stayed Bilbo's hand.",
+            topic: "Gandalf, pity, mercy"
+        }
+    });
+
+    const onSubmit: SubmitHandler<JournalEntryDto> =
+        (UserEntry) => console.log(UserEntry);
+
     return (
         <>
             <header>
@@ -6,28 +24,46 @@ export default function CreateJournalEntry() {
                     Jot down your thoughts
                 </h2>
             </header>
-            <form>
+            // "handleSubmit" will validate your inputs before invoking "onSubmit"
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor={"quote"}>Quote:</label>
+                <br/>
                 <input id={"quote"}
-                       name={"quote"}
-                       type={"text"}
-                       required={true}
-                       maxLength={500}
-                       size={50}
+                       {...register(
+                           "quote",
+                           {
+                               required: "This field is required",
+                               maxLength: {
+                                   value:MAX_LENGTH_QUOTE,
+                                   message: "Max length is " + MAX_LENGTH_QUOTE
+                               }
+                           }
+                       )
+                       }
+                       size={MAX_LENGTH_QUOTE*0.2}
                 />
                 <br/>
+                <span>{errors.quote?.message}</span>
+                <br/>
                 <label htmlFor={"topic"}>Topic:</label>
+                <br/>
                 <input id={"topic"}
-                       name={"topic"}
-                       type={"text"}
-                       required={true}
-                       maxLength={50}
-                       size={20}
+                       {...register("topic",
+                           {
+                               required: "This field is required",
+                               maxLength: {
+                                   value:MAX_LENGTH_TOPIC,
+                                   message: "Max length is " + MAX_LENGTH_TOPIC
+                               }
+                           })}
+                       size={MAX_LENGTH_TOPIC*0.4}
                 />
+                <br/>
+                <span>{errors.topic?.message}</span>
                 <br/>
                 <input className={"create__Journal__Entry"}
                        type={"submit"}
-                value={"Create"}></input>
+                       value={"Create"}></input>
             </form>
         </>
     )
