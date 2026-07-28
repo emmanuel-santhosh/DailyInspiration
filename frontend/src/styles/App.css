@@ -1,8 +1,3 @@
-div,
-button {
-    cursor: url("/public/cursor/pen-tool.svg") 12 0, auto;
-}
-
 div {
     display: flex;
     flex-direction: column;
