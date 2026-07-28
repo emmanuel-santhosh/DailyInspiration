@@ -40,24 +40,24 @@ export default function ReadJournalEntries() {
                 <h2>
                     Recall your entries
                 </h2>
-                <section className={"journal__entry__section"}>
-                    {
-                        journalEntries.map((journalEntry, index) =>
-                            /*
-                            * https://react.dev/learn/rendering-lists
-                            * */
-                            <article className={"journal__entry__holder"}
-                                     key={index + 1}
-                                     id={`journal__entry__${index + 1}`}>
-                                <p> Quote: {journalEntry.quote}</p>
-                                <br/>
-                                <p> Topic: {journalEntry.topic}</p>
-                                <br/>
-                            </article>
-                        )
-                    }
-                </section>
             </header>
+            <section className={"journal__entry__section"}>
+                {
+                    journalEntries.map((journalEntry, index) =>
+                        /*
+                        * https://react.dev/learn/rendering-lists
+                        * */
+                        <article className={"journal__entry__holder"}
+                                 key={index + 1}
+                                 id={`journal__entry__${index + 1}`}>
+                            <p> Quote: {journalEntry.quote}</p>
+                            <br/>
+                            <p> Topic: {journalEntry.topic}</p>
+                            <br/>
+                        </article>
+                    )
+                }
+            </section>
         </>
     )
 }

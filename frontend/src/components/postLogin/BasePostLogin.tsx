@@ -6,8 +6,8 @@ export default function BasePostLogin() {
     return (
         <>
 
-            <NavBarPostLogin></NavBarPostLogin>
-            <RoutersPostLogin></RoutersPostLogin>
+            <NavBarPostLogin/>
+            <RoutersPostLogin/>
         </>
     )
 }
