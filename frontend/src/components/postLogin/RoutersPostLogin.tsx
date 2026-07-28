@@ -13,15 +13,15 @@ export default function RoutersPostLogin() {
                 <Route path={"/"}
                 element={<StartPagePostLogin/>}>Start</Route>
                 <Route path={"/create"}
-                       element={<CreateJournalEntry/>}>Create new journal entry</Route>
+                       element={<CreateJournalEntry/>}></Route>
                 <Route path={"/read"}
-                       element={<ReadJournalEntries/>}>Read journal entries</Route>
+                       element={<ReadJournalEntries/>}></Route>
                 <Route path={"/update"}
-                       element={<ModifyEntries/>}>Modify entries</Route>
+                       element={<ModifyEntries/>}></Route>
                 <Route path={"/delete"}
-                       element={<DeleteEntries/>}>Delete entries</Route>
+                       element={<DeleteEntries/>}></Route>
                 <Route path={"/logout"}
-                       element={<Logout/>}>Logout</Route>
+                       element={<Logout/>}></Route>
             </Routes>
         </>
     )
