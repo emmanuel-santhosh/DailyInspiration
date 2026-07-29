@@ -52,6 +52,10 @@ export default function CreateJournalEntry() {
                        {...register(
                            "quote",
                            {
+                               setValueAs: (value) =>
+                                   value.trim() === ""
+                                       ? undefined
+                                       : value.trim(),
                                required: "This field is required",
                                maxLength: {
                                    value: MAX_LENGTH_QUOTE,

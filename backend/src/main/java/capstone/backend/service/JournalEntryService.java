@@ -21,7 +21,7 @@ public class JournalEntryService {
     }
 
     protected Optional<JournalEntry> findJournalEntryByQuoteAndTopic(String quote, String topic) {
-        return journalEntryRepo.findJournalEntryByQuoteAndTopic(quote, topic);
+        return journalEntryRepo.findJournalEntryByQuoteAndTopic(quote.strip(), topic.strip());
     }
 
     public List<JournalEntryResponseDto> findAllJournalEntries() {
