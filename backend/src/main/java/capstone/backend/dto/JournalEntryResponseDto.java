@@ -10,7 +10,7 @@ public record JournalEntryResponseDto(
         String topic) {
     /*
      * Adapter function to convert JournalEntry object from Repo
-     * to JournalEntry DTO
+     * to appropriate Dto
      * */
     public static JournalEntryResponseDto fromEntity(JournalEntry entry) {
         return new JournalEntryResponseDto(entry.getId(), entry.getQuote(), entry.getTopic());
