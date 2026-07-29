@@ -35,8 +35,7 @@ export function formSubmit(props: Readonly<onSubmitProps>): SubmitHandler<Journa
             case "Update":
                 break;
         }
-        ;
-    }
+    };
 
 }
 
