@@ -10,7 +10,7 @@ export default function ChangeJournalEntries() {
 
     useEffect(() => {
         void fetchJournalEntries({setJournalEntries, setLoading});
-    }, [journalEntries]);
+    }, []);
 
     if (loading) {
         return (
@@ -18,7 +18,7 @@ export default function ChangeJournalEntries() {
         )
     }
 
-    return(
+    return (
         <>
             <header>
                 <h2>
