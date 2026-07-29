@@ -6,8 +6,6 @@ export default function NavBarPostLogin() {
             <Link to={"/"}>Start</Link>
             <Link to={"/create"}>Create new journal entry</Link>
             <Link to={"/read"}>Read journal entries</Link>
-            <Link to={"/update"}>Modify entries</Link>
-            <Link to={"/delete"}>Delete entries</Link>
             <Link to={"/logout"}>Logout</Link>
         </nav>
     )
