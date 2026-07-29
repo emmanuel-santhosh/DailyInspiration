@@ -1,1 +1,0 @@
-export type JournalEntryListOperation = "READ" | "UPDATE" | "DELETE";

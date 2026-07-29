@@ -1,9 +1,9 @@
 import type {JournalEntryResponseDto} from "../../../types/JournalEntryDto.ts";
-import type {JournalEntryListOperation} from "../../../types/JournalEntryDtoList.ts";
+import type {JournalEntryOperation} from "../../../types/JournalEntryOperation.ts";
 
 interface ListOfJournalEntriesProps {
     journalEntries: JournalEntryResponseDto[];
-    operation: JournalEntryListOperation
+    operation: JournalEntryOperation
 }
 
 export default function ListOfJournalEntries(props: ListOfJournalEntriesProps) {
