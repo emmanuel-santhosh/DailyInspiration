@@ -1,10 +1,7 @@
 package capstone.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -12,8 +9,8 @@ import java.util.Objects;
 @Table(name = "journal_entries")
 @Data
 @Builder
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class JournalEntry {
 
     @Id
