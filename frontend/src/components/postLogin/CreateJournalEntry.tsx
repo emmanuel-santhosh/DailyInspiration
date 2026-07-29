@@ -1,4 +1,4 @@
-import {useForm, type SubmitHandler} from "react-hook-form"
+import {type SubmitHandler, useForm} from "react-hook-form"
 import {
     BASE_BACKEND_URI,
     type JournalEntryRequestDto,
@@ -75,6 +75,10 @@ export default function CreateJournalEntry() {
                 <input id={"topic"}
                        {...register("topic",
                            {
+                               setValueAs: (value) =>
+                                   value.trim() === ""
+                                       ? undefined
+                                       : value.trim(),
                                required: "This field is required",
                                maxLength: {
                                    value: MAX_LENGTH_TOPIC,
