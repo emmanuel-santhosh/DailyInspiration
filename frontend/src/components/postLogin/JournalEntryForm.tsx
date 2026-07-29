@@ -1,0 +1,84 @@
+import {type JournalEntryRequestDto, MAX_LENGTH_QUOTE, MAX_LENGTH_TOPIC} from "../../types/JournalEntryDto.ts";
+import {useForm} from "react-hook-form";
+import {formSubmit} from "../../services/formSubmit.ts";
+import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
+
+type journalEntryForm = {
+    id?: number,
+    operation: JournalEntryOperation
+}
+
+export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
+
+    const {
+        register,
+        handleSubmit,
+        formState: {errors},
+        reset
+    } = useForm<JournalEntryRequestDto>();
+
+    const onSubmit =
+        formSubmit({
+            reset,
+            id: props?.id,
+            operation: props.operation
+        });
+
+    return (
+        <>
+            {/*
+            "handleSubmit" will validate your inputs before invoking "onSubmit"
+            */}
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <label htmlFor={"quote"}>Quote</label>
+                <br/>
+                <input id={"quote"}
+                       {...register(
+                           "quote",
+                           {
+                               setValueAs: (value) =>
+                                   value.trim() === ""
+                                       ? undefined
+                                       : value.trim(),
+                               required: "This field is required",
+                               maxLength: {
+                                   value: MAX_LENGTH_QUOTE,
+                                   message: "Max length is " + MAX_LENGTH_QUOTE
+                               }
+                           }
+                       )
+                       }
+                       size={MAX_LENGTH_QUOTE * 0.2}
+                       placeholder={"Pity ? It was pity that stayed Bilbo's hand."}
+                />
+                <br/>
+                <span>{errors.quote?.message}</span>
+                <br/>
+                <label htmlFor={"topic"}>Topic</label>
+                <br/>
+                <input id={"topic"}
+                       {...register("topic",
+                           {
+                               setValueAs: (value) =>
+                                   value.trim() === ""
+                                       ? undefined
+                                       : value.trim(),
+                               required: "This field is required",
+                               maxLength: {
+                                   value: MAX_LENGTH_TOPIC,
+                                   message: "Max length is " + MAX_LENGTH_TOPIC
+                               }
+                           })}
+                       size={MAX_LENGTH_TOPIC * 0.4}
+                       placeholder={"Pity"}
+                />
+                <br/>
+                <span>{errors.topic?.message}</span>
+                <br/>
+                <input className={"create__Journal__Entry"}
+                       type={"submit"}
+                       value={"Create"}></input>
+            </form>
+        </>
+    )
+}
