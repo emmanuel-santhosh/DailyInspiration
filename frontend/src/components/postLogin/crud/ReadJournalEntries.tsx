@@ -2,6 +2,7 @@ import {useEffect} from "react";
 import {fetchJournalEntries} from "../../../services/fetchJournalEntries.ts";
 import {useJournalEntryRetrieval} from "../../../hooks/useJournalEntryRetrieval.ts";
 import ListOfJournalEntries from "./ListOfJournalEntries.tsx";
+import LoadingJournalEntries from "../LoadingJournalEntries.tsx";
 
 export default function ReadJournalEntries() {
 
@@ -13,9 +14,7 @@ export default function ReadJournalEntries() {
 
     if (loading) {
         return (
-            <header>
-                <h2>Loading ...</h2>
-            </header>
+            <LoadingJournalEntries/>
         )
     }
 

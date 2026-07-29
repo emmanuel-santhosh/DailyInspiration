@@ -1,4 +1,23 @@
+import ListOfJournalEntries from "./ListOfJournalEntries.tsx";
+import LoadingJournalEntries from "../LoadingJournalEntries.tsx";
+import {useJournalEntryRetrieval} from "../../../hooks/useJournalEntryRetrieval.ts";
+import {useEffect} from "react";
+import {fetchJournalEntries} from "../../../services/fetchJournalEntries.ts";
+
 export default function ChangeJournalEntries() {
+
+    const {journalEntries, setJournalEntries, loading, setLoading} = useJournalEntryRetrieval();
+
+    useEffect(() => {
+        void fetchJournalEntries({setJournalEntries, setLoading});
+    }, [journalEntries]);
+
+    if (loading) {
+        return (
+            <LoadingJournalEntries/>
+        )
+    }
+
     return(
         <>
             <header>
@@ -9,6 +28,7 @@ export default function ChangeJournalEntries() {
                     You change as a person - let your entries reflect that
                 </h3>
             </header>
+            <ListOfJournalEntries journalEntries={journalEntries} operation={"UPDATE"}/>
         </>
     )
 }
