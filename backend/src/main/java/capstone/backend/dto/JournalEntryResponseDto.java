@@ -1,7 +1,7 @@
 package capstone.backend.dto;
 
 import capstone.backend.entity.JournalEntry;
-import lombok.*;
+import lombok.With;
 
 @With
 public record JournalEntryResponseDto(
