@@ -3,6 +3,7 @@ import StartPagePostLogin from "./StartPagePostLogin.tsx";
 import CreateJournalEntry from "./CreateJournalEntry.tsx";
 import ReadJournalEntries from "./ReadJournalEntries.tsx";
 import Logout from "./Logout.tsx";
+import ChangeJournalEntries from "./ChangeJournalEntries.tsx";
 
 export default function RoutersPostLogin() {
     return (
@@ -13,6 +14,8 @@ export default function RoutersPostLogin() {
                    element={<CreateJournalEntry/>}/>
             <Route path={"/read"}
                    element={<ReadJournalEntries/>}/>
+            <Route path={"/update"}
+                   element={<ChangeJournalEntries/>}/>
             <Route path={"/logout"}
                    element={<Logout/>}/>
         </Routes>
