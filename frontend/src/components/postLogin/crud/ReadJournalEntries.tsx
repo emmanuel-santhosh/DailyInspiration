@@ -8,7 +8,7 @@ export default function ReadJournalEntries() {
 
     useEffect(() => {
         void fetchJournalEntries({setJournalEntries,setLoading});
-    }, [journalEntries]);
+    }, []);
 
     if (loading) {
         return (
