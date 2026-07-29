@@ -1,6 +1,7 @@
 package capstone.backend.controller;
 
-import capstone.backend.dto.JournalEntryDto;
+import capstone.backend.dto.JournalEntryRequestDto;
+import capstone.backend.dto.JournalEntryResponseDto;
 import capstone.backend.service.JournalEntryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,13 @@ public class JournalEntryController {
     }
 
     @GetMapping
-    public List<JournalEntryDto> findAllJournalEntries() {
+    public List<JournalEntryResponseDto> findAllJournalEntries() {
         return journalEntryService.findAllJournalEntries();
     }
 
     @PostMapping
-    public ResponseEntity<JournalEntryDto> createJournalEntry(@RequestBody JournalEntryDto journalEntryDto){
-        JournalEntryDto createdDto = journalEntryService.createJournalEntry(journalEntryDto);
+    public ResponseEntity<JournalEntryResponseDto> createJournalEntry(@RequestBody JournalEntryRequestDto journalEntryRequestDto){
+        JournalEntryResponseDto createdDto = journalEntryService.createJournalEntry(journalEntryRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
     }
 }

@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {BASE_BACKEND_URI, type JournalEntryDto} from "../../types/JournalEntryDto.ts";
+import {BASE_BACKEND_URI, type JournalEntryResponseDto} from "../../types/JournalEntryDto.ts";
 
 export default function ReadJournalEntries() {
 
-    const [journalEntries, setJournalEntries] = useState<JournalEntryDto[]>([]);
+    const [journalEntries, setJournalEntries] = useState<JournalEntryResponseDto[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -43,13 +43,13 @@ export default function ReadJournalEntries() {
             </header>
             <section className={"journal__entry__section"}>
                 {
-                    journalEntries.map((journalEntry, index) =>
+                    journalEntries.map((journalEntry) =>
                         /*
                         * https://react.dev/learn/rendering-lists
                         * */
                         <article className={"journal__entry__holder"}
-                                 key={index + 1}
-                                 id={`journal__entry__${index + 1}`}>
+                                 key={journalEntry.id}
+                                 id={`journal__entry__${journalEntry.id}`}>
                             <p> Quote: {journalEntry.quote}</p>
                             <br/>
                             <p> Topic: {journalEntry.topic}</p>

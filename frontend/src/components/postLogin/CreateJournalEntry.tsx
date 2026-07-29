@@ -1,7 +1,7 @@
-import {useForm, type SubmitHandler} from "react-hook-form"
+import {type SubmitHandler, useForm} from "react-hook-form"
 import {
     BASE_BACKEND_URI,
-    type JournalEntryDto,
+    type JournalEntryRequestDto,
     MAX_LENGTH_QUOTE,
     MAX_LENGTH_TOPIC
 } from "../../types/JournalEntryDto.ts";
@@ -14,10 +14,10 @@ export default function CreateJournalEntry() {
         handleSubmit,
         formState: {errors},
         reset
-    } = useForm<JournalEntryDto>();
+    } = useForm<JournalEntryRequestDto>();
 
-    const onSubmit: SubmitHandler<JournalEntryDto> =
-        async (data: JournalEntryDto) => {
+    const onSubmit: SubmitHandler<JournalEntryRequestDto> =
+        async (data: JournalEntryRequestDto) => {
             try {
                 // await PAUSES here, waiting for server response
                 // Meanwhile, the UI stays responsive
