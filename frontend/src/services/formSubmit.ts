@@ -12,21 +12,31 @@ type onSubmitProps = {
 export function formSubmit(props: Readonly<onSubmitProps>): SubmitHandler<JournalEntryRequestDto> {
     const {reset} = props;
     return async (data: JournalEntryRequestDto) => {
-        try {
-            // await PAUSES here, waiting for server response
-            // Meanwhile, the UI stays responsive
-            const response = await axios.post(BASE_BACKEND_URI, data);
+        switch (props.operation) {
+            case "Create":
+                try {
+                    // await PAUSES here, waiting for server response
+                    // Meanwhile, the UI stays responsive
+                    const response = await axios.post(BASE_BACKEND_URI, data);
 
-            // Once server responds, this line runs
-            console.log("Saved successfully:", response.data);
-            alert("Data saved!");
-            reset();
+                    // Once server responds, this line runs
+                    console.log("Saved successfully:", response.data);
+                    alert("Data saved!");
+                    reset();
 
-        } catch (error) {
-            // If network error or server error occurs
-            console.error("Failed to save:", error);
-            alert("Failed to save data");
+                } catch (error) {
+                    // If network error or server error occurs
+                    console.error("Failed to save:", error);
+                    alert("Failed to save data");
+                }
+                break;
+            case "Read":
+                break;
+            case "Update":
+                break;
         }
-    };
+        ;
+    }
+
 }
 
