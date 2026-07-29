@@ -12,12 +12,12 @@ type journalEntryForm = {
 export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
 
     const defaultQuote = typeof props.journalEntry?.quote === "undefined"
-                                        ? ""
-                                        : props.journalEntry.quote;
+        ? ""
+        : props.journalEntry.quote;
 
     const defaultTopic = typeof props.journalEntry?.topic === "undefined"
-                                        ? ""
-                                        : props.journalEntry?.topic;
+        ? ""
+        : props.journalEntry?.topic;
 
     const {
         register,
@@ -25,7 +25,12 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
         formState: {errors},
         reset,
         setValues
-    } = useForm<JournalEntryRequestDto>();
+    } = useForm<JournalEntryRequestDto>({
+        defaultValues: {
+            quote: defaultQuote,
+            topic: defaultTopic,
+        },
+    });
 
     const onSubmit =
         formSubmit({
@@ -36,8 +41,8 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
 
     const onCancel = () => {
         setValues({
-            quote:defaultQuote,
-            topic:defaultTopic
+            quote: defaultQuote,
+            topic: defaultTopic
         });
     };
 
