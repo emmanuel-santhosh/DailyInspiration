@@ -27,7 +27,7 @@ export default function ReadJournalEntries() {
             </header>
             <ListOfJournalEntries
                 journalEntries={journalEntries}
-                operation={"READ"}/>
+                operation={"Read"}/>
         </>
     )
 }

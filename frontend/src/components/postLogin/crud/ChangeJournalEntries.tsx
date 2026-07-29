@@ -25,10 +25,11 @@ export default function ChangeJournalEntries() {
                     Edit your entries
                 </h2>
                 <h3>
-                    You change as a person - let your entries reflect that
+                    You change as a person - let your entries reflect that. <br/>
+                    Click on a journal entry to update it.
                 </h3>
             </header>
-            <ListOfJournalEntries journalEntries={journalEntries} operation={"UPDATE"}/>
+            <ListOfJournalEntries journalEntries={journalEntries} operation={"Update"}/>
         </>
     )
 }

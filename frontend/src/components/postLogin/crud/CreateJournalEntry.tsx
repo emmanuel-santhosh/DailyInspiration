@@ -9,7 +9,7 @@ export default function CreateJournalEntry() {
                     Jot down your thoughts
                 </h2>
             </header>
-            <JournalEntryForm operation={"CREATE"}/>
+            <JournalEntryForm operation={"Create"}/>
         </>
     )
 }
