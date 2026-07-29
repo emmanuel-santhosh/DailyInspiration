@@ -5,16 +5,26 @@ import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
 
 type journalEntryForm = {
     id?: number,
-    operation: JournalEntryOperation
+    operation: JournalEntryOperation,
+    journalEntry?: JournalEntryRequestDto
 }
 
 export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
+
+    const defaultQuote = typeof props.journalEntry?.quote === "undefined"
+                                        ? ""
+                                        : props.journalEntry.quote;
+
+    const defaultTopic = typeof props.journalEntry?.topic === "undefined"
+                                        ? ""
+                                        : props.journalEntry?.topic;
 
     const {
         register,
         handleSubmit,
         formState: {errors},
-        reset
+        reset,
+        setValues
     } = useForm<JournalEntryRequestDto>();
 
     const onSubmit =
@@ -23,6 +33,13 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
             id: props?.id,
             operation: props.operation
         });
+
+    const onCancel = () => {
+        setValues({
+            quote:defaultQuote,
+            topic:defaultTopic
+        });
+    };
 
     return (
         <>
@@ -78,6 +95,8 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
                 <input className={"create__Journal__Entry"}
                        type={"submit"}
                        value={"Create"}></input>
+                <br/>
+                <button type="button" onClick={onCancel}>Cancel</button>
             </form>
         </>
     )
