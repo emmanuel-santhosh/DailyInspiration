@@ -4,7 +4,7 @@ import {
     type JournalEntryRequestDto,
     MAX_LENGTH_QUOTE,
     MAX_LENGTH_TOPIC
-} from "../../types/JournalEntryDto.ts";
+} from "../../../types/JournalEntryDto.ts";
 import axios from "axios";
 
 export default function CreateJournalEntry() {

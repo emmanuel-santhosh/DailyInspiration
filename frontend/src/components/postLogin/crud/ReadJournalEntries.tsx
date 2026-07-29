@@ -1,30 +1,14 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
-import {BASE_BACKEND_URI, type JournalEntryResponseDto} from "../../types/JournalEntryDto.ts";
+import {useEffect} from "react";
+import {fetchJournalEntries} from "../../../services/fetchJournalEntries.ts";
+import {useJournalEntryRetrieval} from "../../../hooks/useJournalEntryRetrieval.ts";
 
 export default function ReadJournalEntries() {
 
-    const [journalEntries, setJournalEntries] = useState<JournalEntryResponseDto[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const {journalEntries, setJournalEntries, loading, setLoading} = useJournalEntryRetrieval();
 
     useEffect(() => {
-        /*
-        * async is wrapped in a function because it is an expression.
-        * useEffect expects either assignment or function call.
-        * */
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(BASE_BACKEND_URI);
-                setJournalEntries(response.data);
-            } catch (error) {
-                console.log(error);
-                alert("Failed to receive data. \nPlease check console.");
-            } finally {
-                setLoading(false);
-            }
-        };
-        void fetchData();
-    }, []);
+        void fetchJournalEntries({setJournalEntries,setLoading});
+    }, [journalEntries]);
 
     if (loading) {
         return (
