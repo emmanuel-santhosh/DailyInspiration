@@ -94,7 +94,7 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
                 <br/>
                 <input className={"create__Journal__Entry"}
                        type={"submit"}
-                       value={"Create"}></input>
+                       value={props.operation}></input>
                 <br/>
                 <button type="button" onClick={onCancel}>Cancel</button>
             </form>
