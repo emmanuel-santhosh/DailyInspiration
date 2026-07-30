@@ -1,4 +1,4 @@
-import ListOfJournalEntries from "./ListOfJournalEntries.tsx";
+import ListOfJournalEntries from "../ListOfJournalEntries.tsx";
 import LoadingJournalEntries from "../LoadingJournalEntries.tsx";
 import {useJournalEntryRetrieval} from "../../../hooks/useJournalEntryRetrieval.ts";
 import {useEffect} from "react";
