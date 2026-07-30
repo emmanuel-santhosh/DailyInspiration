@@ -27,7 +27,7 @@ export function formSubmit(props: Readonly<onSubmitProps>): SubmitHandler<Journa
                 } catch (error) {
                     // If network error or server error occurs
                     console.error("Failed to save:", error);
-                    alert("Failed to save data");
+                    alert("Failed to save data. Check console.");
                 }
                 break;
             case "Read":
