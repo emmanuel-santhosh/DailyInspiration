@@ -1,7 +1,7 @@
-import type {JournalEntryRequestDto, JournalEntryResponseDto} from "../../../types/JournalEntryDto.ts";
-import type {JournalEntryOperation} from "../../../types/JournalEntryOperation.ts";
+import type {JournalEntryRequestDto, JournalEntryResponseDto} from "../../types/JournalEntryDto.ts";
+import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
 import {useState} from "react";
-import Modal from "./Modal.tsx";
+import EditModal from "./EditModal.tsx";
 
 interface ListOfJournalEntriesProps {
     journalEntries: JournalEntryResponseDto[];
@@ -12,8 +12,8 @@ export default function ListOfJournalEntries(props: ListOfJournalEntriesProps) {
 
     // Following hooks are for modal component
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [selectedJournalEntry, setSelectedJournalEntry] = useState<JournalEntryRequestDto>({quote: "", topic: ""});
-    const [id, setId] = useState<number>(1);
+    const [selectedJournalEntry, setSelectedJournalEntry] = useState<JournalEntryRequestDto | null>(null);
+    const [journalEntryId, setJournalEntryId] = useState<number>(0);
 
     const clickHandler = (journalEntry: JournalEntryRequestDto) => {
         setIsOpen(true);
@@ -41,15 +41,18 @@ export default function ListOfJournalEntries(props: ListOfJournalEntriesProps) {
                                 <button key={`button_${journalEntry.id}`}
                                         onClick={() => {
                                             clickHandler(journalEntry);
-                                            setId(journalEntry.id);
+                                            setJournalEntryId(journalEntry.id);
                                         }}>{props.operation}</button>}
                         </>
                     )
                 }
-                {isOpen && <Modal journalEntry={selectedJournalEntry}
-                                  setIsOpen={setIsOpen}
-                                  operation={props.operation}
-                                  id={id}/>}
+                {isOpen &&
+                    selectedJournalEntry &&
+                    <EditModal journalEntry={selectedJournalEntry}
+                               setIsOpen={setIsOpen}
+                               operation={props.operation}
+                               journalEntryId={journalEntryId}
+                               setSelectedJournalEntry={setSelectedJournalEntry}/>}
             </section>
         </>
     )
