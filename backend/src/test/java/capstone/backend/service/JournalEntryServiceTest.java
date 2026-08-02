@@ -249,8 +249,8 @@ class JournalEntryServiceTest {
 
         // When & Then
         assertThatExceptionOfType(JournalEntryNotFoundException.class)
-                .isThrownBy(() -> {
-                    testService.updateJournalEntry(testId, testDto);
-                }).withMessage(exceptionMessage);
+                .isThrownBy(() ->
+                        testService.updateJournalEntry(testId, testDto))
+                .withMessage(exceptionMessage);
     }
 }
