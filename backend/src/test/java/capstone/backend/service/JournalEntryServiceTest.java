@@ -38,12 +38,12 @@ class JournalEntryServiceTest {
     @Test
     void findAllJournalEntries_shouldReturnListOfJournalEntryDto_whenRepoNotEmpty() {
         // Given
-        Long id1 = 1L;
+        long id1 = 1L;
         String quote1 = "q1";
         String topic1 = "t1";
         JournalEntry testEntry1 = JournalEntry.builder().id(id1).quote(quote1).topic(topic1).build();
 
-        Long id2 = 2L;
+        long id2 = 2L;
         String quote2 = "q2";
         String topic2 = "t2";
         JournalEntry testEntry2 = JournalEntry.builder().id(id2).quote(quote2).topic(topic2).build();
@@ -132,7 +132,7 @@ class JournalEntryServiceTest {
         String testTopic = "t1";
         JournalEntryRequestDto testRequestDto = new JournalEntryRequestDto(testQuote, testTopic);
 
-        Long testId = 1L;
+        long testId = 1L;
         JournalEntry testEntry = JournalEntry.builder()
                 .id(testId)
                 .quote(testQuote)
@@ -171,7 +171,7 @@ class JournalEntryServiceTest {
         String testTopic = "t1";
         JournalEntryRequestDto testDto = new JournalEntryRequestDto(testQuote, testTopic);
 
-        Long testId = 1L;
+        long testId = 1L;
         JournalEntry testEntry = JournalEntry.builder()
                 .id(testId)
                 .quote(testQuote)
@@ -202,7 +202,7 @@ class JournalEntryServiceTest {
         // Given
         String oldQuote = "q1";
         String oldTopic = "t1";
-        Long testId = 1L;
+        long testId = 1L;
         JournalEntry testEntry = JournalEntry.builder()
                 .id(testId)
                 .quote(oldQuote)
@@ -240,7 +240,7 @@ class JournalEntryServiceTest {
         String testTopic = "t1";
         JournalEntryRequestDto testDto = new JournalEntryRequestDto(testQuote, testTopic);
 
-        Long testId = 1L;
+        long testId = 1L;
         JournalEntryRepo testRepo = mock(JournalEntryRepo.class);
         String exceptionMessage = "Journal Entry with id: " + testId + " not found !";
         when(testRepo.findById(testId)).thenThrow(new JournalEntryNotFoundException(exceptionMessage));

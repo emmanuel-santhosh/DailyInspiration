@@ -119,7 +119,7 @@ class JournalEntryControllerTest {
                 .topic(oldTopic)
                 .build();
         testJERepo.save(testEntry);
-        Long entityId = testEntry.getId();
+        long entityId = testEntry.getId();
 
         String newQuote = "q2";
         String newTopic = "t2";
@@ -153,7 +153,7 @@ class JournalEntryControllerTest {
         JournalEntryRequestDto testDto = new JournalEntryRequestDto(newQuote, newTopic);
         String testDtoAsJson = objectMapper.writeValueAsString(testDto);
 
-        Long testId = 200L;
+        long testId = 200L;
         String exceptionMessage = "Journal Entry with id: " + testId + " not found !";
 
         String putEndpoint = "/" + testId;
