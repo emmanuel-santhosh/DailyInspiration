@@ -25,7 +25,7 @@ public class JournalEntryController {
     }
 
     @PostMapping
-    public ResponseEntity<JournalEntryResponseDto> createJournalEntry(@RequestBody JournalEntryRequestDto journalEntryRequestDto){
+    public ResponseEntity<JournalEntryResponseDto> createJournalEntry(@RequestBody JournalEntryRequestDto journalEntryRequestDto) {
         JournalEntryResponseDto createdDto = journalEntryService.createJournalEntry(journalEntryRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
     }
