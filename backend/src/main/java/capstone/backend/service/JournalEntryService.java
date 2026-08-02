@@ -3,6 +3,7 @@ package capstone.backend.service;
 import capstone.backend.dto.JournalEntryRequestDto;
 import capstone.backend.dto.JournalEntryResponseDto;
 import capstone.backend.entity.JournalEntry;
+import capstone.backend.exception.JournalEntryNotFoundException;
 import capstone.backend.repo.JournalEntryRepo;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +42,17 @@ public class JournalEntryService {
          * orElseGet is lazy evaluation - computed after the Optional object is null-checked
          * */
         return JournalEntryResponseDto.fromEntity(createdJournalEntry);
+    }
+
+    public JournalEntryResponseDto updateJournalEntry(
+            Long id,
+            JournalEntryRequestDto journalEntryRequestDto) throws RuntimeException {
+        JournalEntry possibleExistingEntry = journalEntryRepo.findById(id)
+                .orElseThrow(() -> new JournalEntryNotFoundException("Journal Entry with id: " + id + " not found !"));
+
+        possibleExistingEntry.setQuote(journalEntryRequestDto.quote());
+        possibleExistingEntry.setTopic(journalEntryRequestDto.topic());
+
+        return JournalEntryResponseDto.fromEntity(possibleExistingEntry);
     }
 }
