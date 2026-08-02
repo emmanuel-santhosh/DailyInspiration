@@ -46,7 +46,7 @@ public class JournalEntryService {
 
     public JournalEntryResponseDto updateJournalEntry(
             Long id,
-            JournalEntryRequestDto journalEntryRequestDto) throws RuntimeException {
+            JournalEntryRequestDto journalEntryRequestDto) throws JournalEntryNotFoundException {
         JournalEntry possibleExistingEntry = journalEntryRepo.findById(id)
                 .orElseThrow(() -> new JournalEntryNotFoundException("Journal Entry with id: " + id + " not found !"));
 
