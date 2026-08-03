@@ -170,4 +170,49 @@ class JournalEntryControllerTest {
                 .andExpect(result ->
                         assertThat(exceptionMessage).isEqualTo(Objects.requireNonNull(result.getResolvedException()).getMessage()));
     }
+
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void deleteJournalEntry_JournalEntryDoesNotExistInRepo_shouldThrowException() throws Exception {
+        // Given
+        long testId = 200L;
+        String exceptionMessage = "Journal Entry with id: " + testId + " not found !";
+
+        String deleteEndpoint = "/" + testId;
+
+        // When
+        mockMvc.perform(MockMvcRequestBuilders.delete(baseURI + deleteEndpoint))
+                // Then
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(result ->
+                        assertThat(result.getResolvedException())
+                                .isInstanceOf(JournalEntryNotFoundException.class))
+                .andExpect(result ->
+                        assertThat(exceptionMessage).isEqualTo(Objects.requireNonNull(result.getResolvedException()).getMessage()));
+
+    }
+
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void deleteJournalEntry_shouldReturnString_WithStatus204() throws Exception {
+        // Given
+        String testQuote = "q1";
+        String testTopic = "t1";
+        JournalEntry testEntry = JournalEntry.builder()
+                .quote(testQuote)
+                .topic(testTopic)
+                .build();
+        testJERepo.save(testEntry);
+        long entityId = testEntry.getId();
+
+        String deleteEndpoint = "/" + entityId;
+        String expectedString = "Journal Entry with id: " + entityId + " deleted.";
+
+        // When
+        mockMvc.perform(MockMvcRequestBuilders.delete(baseURI + deleteEndpoint))
+                // Then
+                .andExpect(MockMvcResultMatchers.status().isNoContent())
+                .andExpect(MockMvcResultMatchers.content().string(expectedString));
+
+    }
 }

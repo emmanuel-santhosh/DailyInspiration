@@ -41,6 +41,6 @@ public class JournalEntryController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteJournalEntry(
             @PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(journalEntryService.deleteJournalEntry(id));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(journalEntryService.deleteJournalEntry(id));
     }
 }
