@@ -253,4 +253,48 @@ class JournalEntryServiceTest {
                         testService.updateJournalEntry(testId, testDto))
                 .withMessage(exceptionMessage);
     }
+
+    @Test
+    void deleteJournalEntry_shouldThrowException_whenIdInvalid() {
+        // Given
+        long testId = 1L;
+        JournalEntryRepo testRepo = mock(JournalEntryRepo.class);
+        String exceptionMessage = "Journal Entry with id: " + testId + " not found !";
+        when(testRepo.findById(testId)).thenThrow(new JournalEntryNotFoundException(exceptionMessage));
+
+        JournalEntryService testService = new JournalEntryService(testRepo);
+
+        // When & Then
+        assertThatExceptionOfType(JournalEntryNotFoundException.class)
+                .isThrownBy(() ->
+                        testService.deleteJournalEntry(testId))
+                .withMessage(exceptionMessage);
+    }
+
+    @Test
+    void deleteJournalEntry_shouldReturnSuccessMessage_whenIdValid() {
+        // Given
+        long testId = 1L;
+        String testQuote = "q1";
+        String testTopic = "t1";
+        JournalEntry existingEntry = JournalEntry.builder()
+                .id(testId)
+                .quote(testQuote)
+                .topic(testTopic)
+                .build();
+        JournalEntryRepo testRepo = mock(JournalEntryRepo.class);
+        when(testRepo.findById(testId)).thenReturn(Optional.ofNullable(existingEntry));
+
+        JournalEntryService testService = new JournalEntryService(testRepo);
+        String expectedResponse = "Journal Entry with id: " + testId + " deleted.";
+
+        // When
+        String actualResponse = testService.deleteJournalEntry(testId);
+
+        // Then
+        assertThat(actualResponse).isEqualTo(expectedResponse);
+        verify(testRepo).findById(testId);
+        verify(testRepo).delete(existingEntry);
+
+    }
 }
