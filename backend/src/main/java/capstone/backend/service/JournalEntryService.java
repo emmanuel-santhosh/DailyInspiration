@@ -5,10 +5,7 @@ import capstone.backend.dto.JournalEntryResponseDto;
 import capstone.backend.entity.JournalEntry;
 import capstone.backend.exception.JournalEntryNotFoundException;
 import capstone.backend.repo.JournalEntryRepo;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
