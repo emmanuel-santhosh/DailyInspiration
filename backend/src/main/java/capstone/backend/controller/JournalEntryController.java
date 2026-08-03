@@ -37,4 +37,10 @@ public class JournalEntryController {
         JournalEntryResponseDto updatedJournalEntry = journalEntryService.updateJournalEntry(id, journalEntryRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(updatedJournalEntry);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteJournalEntry(
+            @PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(journalEntryService.deleteJournalEntry(id));
+    }
 }
