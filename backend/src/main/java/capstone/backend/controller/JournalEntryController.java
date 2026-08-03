@@ -31,7 +31,7 @@ public class JournalEntryController {
     }
 
     @PutMapping
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}")
     public ResponseEntity<JournalEntryResponseDto> updateJournalEntry(
             @PathVariable Long id,
             @RequestBody JournalEntryRequestDto journalEntryRequestDto) {

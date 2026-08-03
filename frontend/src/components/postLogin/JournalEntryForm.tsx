@@ -13,13 +13,13 @@ type journalEntryForm = {
 
 export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
 
-    const defaultQuote = typeof props.journalEntry?.quote === "undefined"
-        ? ""
-        : props.journalEntry.quote;
+    const defaultQuote:string = typeof props.journalEntry?.quote === "undefined"
+                                ? ""
+                                : props.journalEntry.quote;
 
-    const defaultTopic = typeof props.journalEntry?.topic === "undefined"
-        ? ""
-        : props.journalEntry?.topic;
+    const defaultTopic:string = typeof props.journalEntry?.topic === "undefined"
+                                ? ""
+                                : props.journalEntry?.topic;
 
     const {
         register,
