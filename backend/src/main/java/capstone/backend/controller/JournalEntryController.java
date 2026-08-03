@@ -30,8 +30,7 @@ public class JournalEntryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
     }
 
-    @PutMapping
-    @RequestMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<JournalEntryResponseDto> updateJournalEntry(
             @PathVariable Long id,
             @RequestBody JournalEntryRequestDto journalEntryRequestDto) {
