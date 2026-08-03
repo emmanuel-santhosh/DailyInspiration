@@ -40,6 +40,7 @@ export default function EditModal(props: Readonly<modalProps>) {
             <button
                 onClick={closeHandler}
                 className="modal-close-btn"
+                type={"button"}
                 aria-label="Close modal">
                 Close
             </button>
