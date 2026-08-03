@@ -8,7 +8,7 @@ type journalEntryForm = {
     id?: number,
     operation: JournalEntryOperation,
     journalEntry?: JournalEntryRequestDto,
-    onUpdateSuccess: (journalEntry: JournalEntryRequestDto) => void
+    onUpdateSuccess?: (journalEntry: JournalEntryRequestDto) => void
 }
 
 export default function JournalEntryForm(props: Readonly<journalEntryForm>) {

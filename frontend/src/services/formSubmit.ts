@@ -8,7 +8,7 @@ type onSubmitProps = {
     reset: UseFormReset<JournalEntryRequestDto>;
     id?: number;
     operation: JournalEntryOperation;
-    onUpdateSuccess: (data: JournalEntryRequestDto) => void;
+    onUpdateSuccess?: (data: JournalEntryRequestDto) => void;
 }
 
 export function formSubmit(props: Readonly<onSubmitProps>): SubmitHandler<JournalEntryRequestDto> {
@@ -40,7 +40,7 @@ export function formSubmit(props: Readonly<onSubmitProps>): SubmitHandler<Journa
                     console.log("Updated successfully:", response.data);
                     alert("Data updated!");
                     //const convertedDto: JournalEntryRequestDto = ResponseToRequest(response.data);
-                    props.onUpdateSuccess(ResponseToRequest(response.data));
+                    props.onUpdateSuccess?.(ResponseToRequest(response.data));
                 } catch (error) {
                     console.error("Failed to update:", error);
                     alert("Failed to update data. Check console.");
