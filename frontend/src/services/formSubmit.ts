@@ -33,6 +33,15 @@ export function formSubmit(props: Readonly<onSubmitProps>): SubmitHandler<Journa
             case "Read":
                 break;
             case "Update":
+                try {
+                    const response = await axios.put(BASE_BACKEND_URI + "/" + props.id, data);
+                    console.log("Updated successfully:", response.data);
+                    alert("Data updated!");
+                    reset(response.data);
+                } catch (error) {
+                    console.error("Failed to update:", error);
+                    alert("Failed to update data. Check console.");
+                }
                 break;
         }
     };

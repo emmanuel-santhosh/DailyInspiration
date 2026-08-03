@@ -28,7 +28,10 @@ export default function EditModal(props: Readonly<modalProps>) {
             contentLabel={"Edit Journal Entry"}
             onRequestClose={closeHandler}
             isOpen={!!props.journalEntry}>
-            <JournalEntryForm operation={props.operation} journalEntry={props.journalEntry} id={props.journalEntryId}/>
+            <JournalEntryForm
+                operation={props.operation}
+                journalEntry={props.journalEntry}
+                id={props.journalEntryId}/>
             <button
                 onClick={closeHandler}
                 className="modal-close-btn"

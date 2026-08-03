@@ -52,6 +52,7 @@ public class JournalEntryService {
 
         possibleExistingEntry.setQuote(journalEntryRequestDto.quote());
         possibleExistingEntry.setTopic(journalEntryRequestDto.topic());
+        journalEntryRepo.save(possibleExistingEntry);
 
         return JournalEntryResponseDto.fromEntity(possibleExistingEntry);
     }
