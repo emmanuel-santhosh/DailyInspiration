@@ -38,11 +38,13 @@ export default function ListOfJournalEntries(props: ListOfJournalEntriesProps) {
                                 <br/>
                             </article>
                             {(props.operation !== "Create" && props.operation !== "Read") &&
-                                <button key={`button_${journalEntry.id}`}
-                                        onClick={() => {
-                                            clickHandler(journalEntry);
-                                            setJournalEntryId(journalEntry.id);
-                                        }}>{props.operation}</button>}
+                                <button
+                                    type={"button"}
+                                    key={`button_${journalEntry.id}`}
+                                    onClick={() => {
+                                        clickHandler(journalEntry);
+                                        setJournalEntryId(journalEntry.id);
+                                    }}>{props.operation}</button>}
                         </>
                     )
                 }
@@ -52,7 +54,8 @@ export default function ListOfJournalEntries(props: ListOfJournalEntriesProps) {
                                setIsOpen={setIsOpen}
                                operation={props.operation}
                                journalEntryId={journalEntryId}
-                               setSelectedJournalEntry={setSelectedJournalEntry}/>}
+                               setSelectedJournalEntry={setSelectedJournalEntry}
+                    />}
             </section>
         </>
     )

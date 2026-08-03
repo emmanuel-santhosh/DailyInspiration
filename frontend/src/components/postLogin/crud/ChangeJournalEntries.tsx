@@ -10,7 +10,7 @@ export default function ChangeJournalEntries() {
 
     useEffect(() => {
         void fetchJournalEntries({setJournalEntries, setLoading});
-    }, []);
+    });
 
     if (loading) {
         return (
@@ -29,7 +29,9 @@ export default function ChangeJournalEntries() {
                     Click on a journal entry to update it.
                 </h3>
             </header>
-            <ListOfJournalEntries journalEntries={journalEntries} operation={"Update"}/>
+            <ListOfJournalEntries
+                journalEntries={journalEntries}
+                operation={"Update"}/>
         </>
     )
 }

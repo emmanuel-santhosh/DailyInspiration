@@ -2,11 +2,13 @@ import {type JournalEntryRequestDto, MAX_LENGTH_QUOTE, MAX_LENGTH_TOPIC} from ".
 import {useForm} from "react-hook-form";
 import {formSubmit} from "../../services/formSubmit.ts";
 import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
+import {useEffect} from "react";
 
 type journalEntryForm = {
     id?: number,
     operation: JournalEntryOperation,
-    journalEntry?: JournalEntryRequestDto
+    journalEntry?: JournalEntryRequestDto,
+    onUpdateSuccess: (journalEntry: JournalEntryRequestDto) => void
 }
 
 export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
@@ -32,11 +34,16 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
         },
     });
 
+    useEffect(() => {
+        reset(props.journalEntry);
+    }, [props.journalEntry, reset]);
+
     const onSubmit =
         formSubmit({
             reset,
             id: props?.id,
-            operation: props.operation
+            operation: props.operation,
+            onUpdateSuccess: props.onUpdateSuccess
         });
 
     const onCancel = () => {

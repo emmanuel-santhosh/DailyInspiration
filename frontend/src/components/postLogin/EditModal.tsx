@@ -16,6 +16,10 @@ Modal.setAppElement('#root');
 
 export default function EditModal(props: Readonly<modalProps>) {
 
+    const handleUpdateSuccess = (updatedData: JournalEntryRequestDto) => {
+        props.setSelectedJournalEntry(updatedData); // Updates modal's state
+    };
+
     const closeHandler = () => {
         props.setIsOpen(false);
         props.setSelectedJournalEntry(null);
@@ -31,7 +35,8 @@ export default function EditModal(props: Readonly<modalProps>) {
             <JournalEntryForm
                 operation={props.operation}
                 journalEntry={props.journalEntry}
-                id={props.journalEntryId}/>
+                id={props.journalEntryId}
+                onUpdateSuccess={handleUpdateSuccess}/>
             <button
                 onClick={closeHandler}
                 className="modal-close-btn"

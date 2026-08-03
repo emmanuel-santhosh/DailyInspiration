@@ -2,11 +2,13 @@ import {BASE_BACKEND_URI, type JournalEntryRequestDto} from "../types/JournalEnt
 import axios from "axios";
 import type {SubmitHandler, UseFormReset} from "react-hook-form";
 import type {JournalEntryOperation} from "../types/JournalEntryOperation.ts";
+import {ResponseToRequest} from "../utilities/ResponseToRequest.ts";
 
 type onSubmitProps = {
     reset: UseFormReset<JournalEntryRequestDto>;
     id?: number;
     operation: JournalEntryOperation;
+    onUpdateSuccess: (data: JournalEntryRequestDto) => void;
 }
 
 export function formSubmit(props: Readonly<onSubmitProps>): SubmitHandler<JournalEntryRequestDto> {
@@ -37,7 +39,8 @@ export function formSubmit(props: Readonly<onSubmitProps>): SubmitHandler<Journa
                     const response = await axios.put(BASE_BACKEND_URI + "/" + props.id, data);
                     console.log("Updated successfully:", response.data);
                     alert("Data updated!");
-                    reset(response.data);
+                    //const convertedDto: JournalEntryRequestDto = ResponseToRequest(response.data);
+                    props.onUpdateSuccess(ResponseToRequest(response.data));
                 } catch (error) {
                     console.error("Failed to update:", error);
                     alert("Failed to update data. Check console.");
