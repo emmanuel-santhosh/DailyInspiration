@@ -18,7 +18,9 @@ type journalEntryForm = {
 
     // Callback fn to parent modal
     onUpdateSuccess?: () => void,
-    onJournalEntryUpdate?: (updatedJournalEntry: JournalEntryResponseDto) => void
+
+    onJournalEntryUpdate?: (updatedJournalEntry: JournalEntryResponseDto) => void,
+    onJournalEntryDelete?: (deletedJournalEntryId: number) => void
 }
 
 export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
@@ -50,7 +52,8 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
             id: props?.id,
             operation: props.operation,
             onUpdateSuccess: props.onUpdateSuccess,
-            onJournalEntryUpdate: props?.onJournalEntryUpdate
+            onJournalEntryUpdate: props?.onJournalEntryUpdate,
+            onJournalEntryDelete: props?.onJournalEntryDelete
         });
 
     const onReset = () => {

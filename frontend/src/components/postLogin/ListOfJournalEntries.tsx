@@ -7,15 +7,21 @@ interface ListOfJournalEntriesProps {
     journalEntries: JournalEntryResponseDto[];
     operation: JournalEntryOperation;
 
-    //Callback function to update list of journal entries
+    /*
+    Callback functions to update list of journal entries
+    following update and delete
+     */
     onJournalEntryUpdate?: (updatedJournalEntry: JournalEntryResponseDto) => void;
+    onJournalEntryDelete?: (deletedJournalEntryId: number) => void;
 }
 
 export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntriesProps>) {
 
-    const {isOpen, setIsOpen,
+    const {
+        isOpen, setIsOpen,
         selectedJournalEntry, setSelectedJournalEntry,
-        journalEntryId, setJournalEntryId} = useModal();
+        journalEntryId, setJournalEntryId
+    } = useModal();
 
     const clickHandler = (journalEntry: JournalEntryRequestDto) => {
         setIsOpen(true);
@@ -56,6 +62,7 @@ export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntrie
                            journalEntryId={journalEntryId}
                            setSelectedJournalEntry={setSelectedJournalEntry}
                            onJournalEntryUpdate={props.onJournalEntryUpdate}
+                           onJournalEntryDelete={props.onJournalEntryDelete}
                 />}
         </section>
     )

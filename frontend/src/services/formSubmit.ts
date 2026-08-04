@@ -9,7 +9,8 @@ type onSubmitProps = {
 
     id?: number;
     onUpdateSuccess?: () => void;
-    onJournalEntryUpdate?: (updatedJournalEntry: JournalEntryResponseDto) => void
+    onJournalEntryUpdate?: (updatedJournalEntry: JournalEntryResponseDto) => void;
+    onJournalEntryDelete?: (deletedJournalEntryId: number) => void
 }
 
 export function formSubmit(props: Readonly<onSubmitProps>): SubmitHandler<JournalEntryRequestDto> {
@@ -41,12 +42,32 @@ export function formSubmit(props: Readonly<onSubmitProps>): SubmitHandler<Journa
                     console.log("Updated successfully:", response.data);
                     alert("Data updated!");
                     // Propagate success to modal
-                    props.onUpdateSuccess?.();
+                    if (props.onUpdateSuccess) {
+                        props.onUpdateSuccess();
+                    }
                     // Transfer response DTO to update component
-                    props.onJournalEntryUpdate?.(response.data);
+                    if (props.onJournalEntryUpdate) {
+                        props.onJournalEntryUpdate(response.data);
+                    }
                 } catch (error) {
                     console.error("Failed to update:", error);
                     alert("Failed to update data. Check console.");
+                }
+                break;
+            case "Delete":
+                try {
+                    const response = await axios.delete(BASE_BACKEND_URI + "/" + props.id);
+                    console.log("Deleted successfully:", response.data);
+                    alert("Data deleted!");
+                    if (props.onUpdateSuccess) {
+                        props.onUpdateSuccess();
+                    }
+                    if (props.onJournalEntryDelete && props.id) {
+                        props.onJournalEntryDelete(props.id);
+                    }
+                } catch (error) {
+                    console.error("Failed to delete:", error);
+                    alert("Failed to delete data. Check console.");
                 }
                 break;
         }

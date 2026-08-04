@@ -11,7 +11,8 @@ type modalProps = {
     setIsOpen: (isOpen: boolean) => void,
     setSelectedJournalEntry: (journalEntry: JournalEntryRequestDto | null) => void,
 
-    onJournalEntryUpdate?: (updatedJournalEntry: JournalEntryResponseDto) => void
+    onJournalEntryUpdate?: (updatedJournalEntry: JournalEntryResponseDto) => void,
+    onJournalEntryDelete?: (deletedJournalEntryId: number) => void
 }
 
 Modal.setAppElement('#root');
@@ -40,7 +41,8 @@ export default function EditModal(props: Readonly<modalProps>) {
                 journalEntry={props.journalEntry}
                 id={props.journalEntryId}
                 onUpdateSuccess={handleUpdateSuccess}
-                onJournalEntryUpdate={props.onJournalEntryUpdate}/>
+                onJournalEntryUpdate={props.onJournalEntryUpdate}
+                onJournalEntryDelete={props.onJournalEntryDelete}/>
             <button
                 onClick={closeHandler}
                 className="modal-close-btn"
