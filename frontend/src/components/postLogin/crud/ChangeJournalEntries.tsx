@@ -35,8 +35,7 @@ export default function ChangeJournalEntries() {
                     Edit your entries
                 </h2>
                 <h3>
-                    You change as a person - let your entries reflect that. <br/>
-                    Click on a journal entry to update it.
+                    You change as a person - let your entries reflect that.
                 </h3>
             </header>
             <ListOfJournalEntries
