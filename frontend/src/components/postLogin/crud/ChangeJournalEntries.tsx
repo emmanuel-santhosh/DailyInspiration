@@ -3,6 +3,7 @@ import LoadingJournalEntries from "../LoadingJournalEntries.tsx";
 import {useJournalEntryRetrieval} from "../../../hooks/useJournalEntryRetrieval.ts";
 import {useEffect} from "react";
 import {fetchJournalEntries} from "../../../services/fetchJournalEntries.ts";
+import type {JournalEntryResponseDto} from "../../../types/JournalEntryDto.ts";
 
 export default function ChangeJournalEntries() {
 
@@ -10,7 +11,16 @@ export default function ChangeJournalEntries() {
 
     useEffect(() => {
         void fetchJournalEntries({setJournalEntries, setLoading});
-    });
+    }, []);
+
+    const handleJournalEntryUpdate = (updatedJournalEntry: JournalEntryResponseDto) => {
+        setJournalEntries(journalEntries.map(
+            existingJournalEntry =>
+                existingJournalEntry.id === updatedJournalEntry.id
+                    ? updatedJournalEntry
+                    : existingJournalEntry
+        ));
+    };
 
     if (loading) {
         return (
@@ -31,7 +41,9 @@ export default function ChangeJournalEntries() {
             </header>
             <ListOfJournalEntries
                 journalEntries={journalEntries}
-                operation={"Update"}/>
+                operation={"Update"}
+                onJournalEntryUpdate={handleJournalEntryUpdate}
+            />
         </>
     )
 }

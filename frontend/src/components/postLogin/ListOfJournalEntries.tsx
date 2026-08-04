@@ -5,7 +5,10 @@ import EditModal from "./EditModal.tsx";
 
 interface ListOfJournalEntriesProps {
     journalEntries: JournalEntryResponseDto[];
-    operation: JournalEntryOperation
+    operation: JournalEntryOperation;
+
+    //Callback function to update list of journal entries
+    onJournalEntryUpdate?: (updatedJournalEntry: JournalEntryResponseDto) => void;
 }
 
 export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntriesProps>) {
@@ -24,8 +27,8 @@ export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntrie
         <section className={"journal__entry__section"}>
             {
                 props.journalEntries.map((journalEntry) =>
-                    <div key = {journalEntry.id}
-                    className={"journal__Entry__div"}>
+                    <div key={journalEntry.id}
+                         className={"journal__Entry__div"}>
                         {/*
                         * https://react.dev/learn/rendering-lists
                         * */}
@@ -53,6 +56,7 @@ export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntrie
                            operation={props.operation}
                            journalEntryId={journalEntryId}
                            setSelectedJournalEntry={setSelectedJournalEntry}
+                           onJournalEntryUpdate={props.onJournalEntryUpdate}
                 />}
         </section>
     )

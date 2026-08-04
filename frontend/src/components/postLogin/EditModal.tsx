@@ -1,4 +1,4 @@
-import type {JournalEntryRequestDto} from "../../types/JournalEntryDto.ts";
+import type {JournalEntryRequestDto, JournalEntryResponseDto} from "../../types/JournalEntryDto.ts";
 import JournalEntryForm from "./JournalEntryForm.tsx";
 import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
 import Modal from 'react-modal';
@@ -6,18 +6,21 @@ import "../../styles/EditModal.css"
 
 type modalProps = {
     journalEntry: JournalEntryRequestDto,
-    journalEntryId: number
+    journalEntryId: number,
     operation: JournalEntryOperation,
     setIsOpen: (isOpen: boolean) => void,
-    setSelectedJournalEntry: (journalEntry: JournalEntryRequestDto | null) => void
+    setSelectedJournalEntry: (journalEntry: JournalEntryRequestDto | null) => void,
+
+    onJournalEntryUpdate?: (updatedJournalEntry: JournalEntryResponseDto) => void
 }
 
 Modal.setAppElement('#root');
 
 export default function EditModal(props: Readonly<modalProps>) {
 
-    const handleUpdateSuccess = (updatedData: JournalEntryRequestDto) => {
-        props.setSelectedJournalEntry(updatedData); // Updates modal's state
+    const handleUpdateSuccess = () => {
+        // On successful update, modal can be closed
+        closeHandler();
     };
 
     const closeHandler = () => {
@@ -36,7 +39,8 @@ export default function EditModal(props: Readonly<modalProps>) {
                 operation={props.operation}
                 journalEntry={props.journalEntry}
                 id={props.journalEntryId}
-                onUpdateSuccess={handleUpdateSuccess}/>
+                onUpdateSuccess={handleUpdateSuccess}
+                onJournalEntryUpdate={props.onJournalEntryUpdate}/>
             <button
                 onClick={closeHandler}
                 className="modal-close-btn"

@@ -1,25 +1,31 @@
-import {type JournalEntryRequestDto, MAX_LENGTH_QUOTE, MAX_LENGTH_TOPIC} from "../../types/JournalEntryDto.ts";
+import {
+    type JournalEntryRequestDto,
+    type JournalEntryResponseDto,
+    MAX_LENGTH_QUOTE,
+    MAX_LENGTH_TOPIC
+} from "../../types/JournalEntryDto.ts";
 import {useForm} from "react-hook-form";
 import {formSubmit} from "../../services/formSubmit.ts";
 import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
 import {useEffect} from "react";
 
 type journalEntryForm = {
-    id?: number,
     operation: JournalEntryOperation,
+
+    // In case existing journal entries are to be processed
+    id?: number,
     journalEntry?: JournalEntryRequestDto,
-    onUpdateSuccess?: (journalEntry: JournalEntryRequestDto) => void
+
+    // Callback fn to parent modal
+    onUpdateSuccess?: () => void,
+    onJournalEntryUpdate?: (updatedJournalEntry: JournalEntryResponseDto) => void
 }
 
 export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
 
-    const defaultQuote:string = typeof props.journalEntry?.quote === "undefined"
-                                ? ""
-                                : props.journalEntry.quote;
+    const defaultQuote: string = props.journalEntry?.quote ?? "";
 
-    const defaultTopic:string = typeof props.journalEntry?.topic === "undefined"
-                                ? ""
-                                : props.journalEntry?.topic;
+    const defaultTopic: string = props.journalEntry?.topic ?? "";
 
     const {
         register,
@@ -43,10 +49,11 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
             reset,
             id: props?.id,
             operation: props.operation,
-            onUpdateSuccess: props.onUpdateSuccess
+            onUpdateSuccess: props.onUpdateSuccess,
+            onJournalEntryUpdate: props?.onJournalEntryUpdate
         });
 
-    const onCancel = () => {
+    const onReset = () => {
         setValues({
             quote: defaultQuote,
             topic: defaultTopic
@@ -108,7 +115,7 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
                        type={"submit"}
                        value={props.operation}></input>
                 <br/>
-                <button type="button" onClick={onCancel}>Cancel</button>
+                <button type="button" onClick={onReset}>Reset</button>
             </form>
         </>
     )
