@@ -1,0 +1,1 @@
+export type JournalEntryOperation = "Create" | "Read" | "Update" | "Delete";
