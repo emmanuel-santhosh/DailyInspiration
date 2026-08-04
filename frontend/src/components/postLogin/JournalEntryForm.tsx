@@ -29,6 +29,8 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
 
     const defaultTopic: string = props.journalEntry?.topic ?? "";
 
+    const isReadOnly: boolean = props.operation === "Delete";
+
     const {
         register,
         handleSubmit,
@@ -89,6 +91,8 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
                        }
                        size={MAX_LENGTH_QUOTE * 0.2}
                        placeholder={"Pity ? It was pity that stayed Bilbo's hand."}
+                       readOnly={isReadOnly}
+                       disabled={isReadOnly}
                 />
                 <br/>
                 <span>{errors.quote?.message}</span>
@@ -110,6 +114,8 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
                            })}
                        size={MAX_LENGTH_TOPIC * 0.4}
                        placeholder={"Pity"}
+                       readOnly={isReadOnly}
+                       disabled={isReadOnly}
                 />
                 <br/>
                 <span>{errors.topic?.message}</span>
@@ -118,7 +124,9 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
                        type={"submit"}
                        value={props.operation}></input>
                 <br/>
-                <button type="button" onClick={onReset}>Reset</button>
+                {!isReadOnly &&
+                    <button type="button" onClick={onReset}>Reset</button>
+                }
             </form>
         </>
     )

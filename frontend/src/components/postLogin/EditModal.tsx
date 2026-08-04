@@ -43,13 +43,15 @@ export default function EditModal(props: Readonly<modalProps>) {
                 onUpdateSuccess={handleUpdateSuccess}
                 onJournalEntryUpdate={props.onJournalEntryUpdate}
                 onJournalEntryDelete={props.onJournalEntryDelete}/>
-            <button
-                onClick={closeHandler}
-                className="modal-close-btn"
-                type={"button"}
-                aria-label="Close modal">
-                Close
-            </button>
+            <div className={"modal-buttons"}>
+                <button
+                    onClick={closeHandler}
+                    className="modal-close-btn"
+                    type={"button"}
+                    aria-label="Close modal">
+                    Close
+                </button>
+            </div>
         </Modal>
     )
 }
