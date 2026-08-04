@@ -7,7 +7,7 @@ div {
     gap: 0.5rem;
 }
 
-.page__Container__Post__Login{
+.page-Container-Post-Login{
     flex-direction: row;
 }
 
@@ -15,6 +15,6 @@ button {
     padding: .5rem;
 }
 
-.first__Child__Pre__Login {
+.first-Child-Pre-Login {
     margin-top: 1rem;
 }
