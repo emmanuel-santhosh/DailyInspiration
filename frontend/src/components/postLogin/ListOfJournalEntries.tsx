@@ -24,12 +24,12 @@ export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntrie
         <section className={"journal__entry__section"}>
             {
                 props.journalEntries.map((journalEntry) =>
-                    <>
+                    <div key = {journalEntry.id}
+                    className={"journal__Entry__div"}>
                         {/*
                         * https://react.dev/learn/rendering-lists
                         * */}
                         <article className={"journal__entry__holder"}
-                                 key={journalEntry.id}
                                  id={`journal__entry__${journalEntry.id}`}>
                             <p> Quote: {journalEntry.quote}</p>
                             <br/>
@@ -39,12 +39,11 @@ export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntrie
                         {(props.operation !== "Create" && props.operation !== "Read") &&
                             <button
                                 type={"button"}
-                                key={`button_${journalEntry.id}`}
                                 onClick={() => {
                                     clickHandler(journalEntry);
                                     setJournalEntryId(journalEntry.id);
                                 }}>{props.operation}</button>}
-                    </>
+                    </div>
                 )
             }
             {isOpen &&
