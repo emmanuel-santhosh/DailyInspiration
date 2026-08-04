@@ -13,7 +13,6 @@ interface ListOfJournalEntriesProps {
 
 export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntriesProps>) {
 
-    // Following hooks are for modal component
     const {isOpen, setIsOpen,
         selectedJournalEntry, setSelectedJournalEntry,
         journalEntryId, setJournalEntryId} = useModal();
