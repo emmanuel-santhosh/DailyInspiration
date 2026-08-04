@@ -1,7 +1,7 @@
 import type {JournalEntryRequestDto, JournalEntryResponseDto} from "../../types/JournalEntryDto.ts";
 import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
-import {useState} from "react";
 import EditModal from "./EditModal.tsx";
+import useModal from "../../hooks/useModal.ts";
 
 interface ListOfJournalEntriesProps {
     journalEntries: JournalEntryResponseDto[];
@@ -14,9 +14,9 @@ interface ListOfJournalEntriesProps {
 export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntriesProps>) {
 
     // Following hooks are for modal component
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [selectedJournalEntry, setSelectedJournalEntry] = useState<JournalEntryRequestDto | null>(null);
-    const [journalEntryId, setJournalEntryId] = useState<number>(0);
+    const {isOpen, setIsOpen,
+        selectedJournalEntry, setSelectedJournalEntry,
+        journalEntryId, setJournalEntryId} = useModal();
 
     const clickHandler = (journalEntry: JournalEntryRequestDto) => {
         setIsOpen(true);
