@@ -1,6 +1,7 @@
 import useJournalEntrySubmit from "../useJournalEntrySubmit.ts";
 import axios from "axios";
 import {BASE_BACKEND_URI} from "../../types/JournalEntryDto.ts";
+import type {JournalEntryDeleteResult} from "../../types/AxiosToBackend.ts";
 
 export const useJournalEntryDelete = () => {
     const {
@@ -9,19 +10,20 @@ export const useJournalEntryDelete = () => {
     } = useJournalEntrySubmit();
 
     const deleteJournalEntry = async (
-        id: number,
-        onUpdateSuccess: () => void,
-        onJournalEntryDelete: (deletedJournalEntryId: number) => void) => {
+        id: number): Promise<JournalEntryDeleteResult> => {
         setIsAxiosOperationTakingPlace(false);
         try {
             const response = await axios.delete(BASE_BACKEND_URI + "/" + id);
             console.log("Deleted successfully:", response.data);
-            alert("Data deleted!");
-            onUpdateSuccess();
-            onJournalEntryDelete(id);
+            return {
+                success: true,
+                successMessage: response.data
+            }
         } catch (error) {
             console.error("Failed to delete:", error);
-            alert("Failed to delete data. Check console.");
+            return {
+                success:false
+            };
         } finally {
             setIsAxiosOperationTakingPlace(false);
         }

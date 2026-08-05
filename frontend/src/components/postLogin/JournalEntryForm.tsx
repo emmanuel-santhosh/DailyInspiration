@@ -9,6 +9,7 @@ import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
 import {useEffect} from "react";
 import {useJournalEntryCreate} from "../../hooks/crud/useJournalEntryCreate.ts";
 import {useJournalEntryUpdate} from "../../hooks/crud/useJournalEntryUpdate.ts";
+import {useJournalEntryDelete} from "../../hooks/crud/useJournalEntryDelete.ts";
 
 type journalEntryForm = {
     operation: JournalEntryOperation,
@@ -47,6 +48,7 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
 
     const {createJournalEntry} = useJournalEntryCreate();
     const {updateJournalEntry} = useJournalEntryUpdate();
+    const {deleteJournalEntry} = useJournalEntryDelete();
 
     useEffect(() => {
         reset(props.journalEntry);
@@ -81,6 +83,26 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
                         }
                     } else {
                         alert("Failed to update data. Check console.");
+                    }
+                }
+                break;
+            }
+            case "Delete":{
+                if (props.id) {
+                    const result = await deleteJournalEntry(
+                        props.id
+                    );
+                    if(result.success){
+                        alert("Data deleted!");
+                        if (props.onUpdateSuccess) {
+                            props.onUpdateSuccess();
+                        }
+                        if (props.onJournalEntryDelete) {
+                            props.onJournalEntryDelete(props.id);
+                        }
+                    }
+                    else{
+                        alert("Failed to delete data. Check console.");
                     }
                 }
                 break;
