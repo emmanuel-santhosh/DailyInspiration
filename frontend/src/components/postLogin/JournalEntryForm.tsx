@@ -8,6 +8,7 @@ import {type SubmitHandler, useForm} from "react-hook-form";
 import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
 import {useEffect} from "react";
 import {useJournalEntryCreate} from "../../hooks/crud/useJournalEntryCreate.ts";
+import {useJournalEntryUpdate} from "../../hooks/crud/useJournalEntryUpdate.ts";
 
 type journalEntryForm = {
     operation: JournalEntryOperation,
@@ -45,22 +46,43 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
     });
 
     const {createJournalEntry} = useJournalEntryCreate();
+    const {updateJournalEntry} = useJournalEntryUpdate();
 
     useEffect(() => {
         reset(props.journalEntry);
     }, [props.journalEntry, reset]);
 
-    const onSubmit:SubmitHandler<JournalEntryRequestDto> = async (formData: JournalEntryRequestDto) => {
+    const onSubmit: SubmitHandler<JournalEntryRequestDto> = async (formData: JournalEntryRequestDto) => {
         switch (props.operation) {
             case "Create": {
-                    const result = await createJournalEntry(formData);
-                    if(result.success){
-                        alert("Data saved!");
-                        reset();
+                const result = await createJournalEntry(formData);
+                if (result.success) {
+                    alert("Data saved!");
+                    reset();
+                } else {
+                    alert("Journal entry creation failed. Please check console.");
+                }
+                break;
+            }
+            case "Update": {
+                if (props.id) {
+                    const result = await updateJournalEntry(
+                        formData,
+                        props.id);
+                    if (result.success) {
+                        alert("Data updated!");
+                        // Propagate success to modal
+                        if (props.onUpdateSuccess) {
+                            props.onUpdateSuccess();
+                        }
+                        // Transfer response DTO to update component
+                        if (props.onJournalEntryUpdate && result.data) {
+                            props.onJournalEntryUpdate(result.data);
+                        }
+                    } else {
+                        alert("Failed to update data. Check console.");
                     }
-                    else{
-                        alert("Journal entry creation failed. Please check console.");
-                    }
+                }
                 break;
             }
         }

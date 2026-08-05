@@ -5,32 +5,32 @@ import {
     type JournalEntryResponseDto
 } from "../../types/JournalEntryDto.ts";
 import axios from "axios";
+import type {JournalEntryCreateResult} from "../../types/AxiosToBackend.ts";
 
 export const useJournalEntryUpdate = () => {
     const {isAxiosOperationTakingPlace, setIsAxiosOperationTakingPlace} = useJournalEntrySubmit();
 
     const updateJournalEntry = async (
         data: JournalEntryRequestDto,
-        id: number,
-        onUpdateSuccess: () => void,
-        onJournalEntryUpdate: (updatedJournalEntry: JournalEntryResponseDto) => void) => {
+        id: number): Promise<JournalEntryCreateResult> => {
 
         setIsAxiosOperationTakingPlace(true);
 
         try {
-            const response = await axios.put(BASE_BACKEND_URI + "/" + id, data);
+            const response = await axios.put<JournalEntryResponseDto>(BASE_BACKEND_URI + "/" + id, data);
             console.log("Updated successfully:", response.data);
-            alert("Data updated!");
-            // Propagate success to modal
-            onUpdateSuccess();
-            // Transfer response DTO to update component
-            onJournalEntryUpdate(response.data);
+            return {
+                data: response.data,
+                success: true
+            };
         } catch (error) {
             console.error("Failed to update:", error);
-            alert("Failed to update data. Check console.");
+            return {
+                success: false,
+            }
         } finally {
             setIsAxiosOperationTakingPlace(false);
         }
     };
-    return {update: updateJournalEntry, isAxiosOperationTakingPlace};
+    return {updateJournalEntry, isAxiosOperationTakingPlace};
 };
