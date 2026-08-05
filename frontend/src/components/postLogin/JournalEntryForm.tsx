@@ -4,10 +4,10 @@ import {
     MAX_LENGTH_QUOTE,
     MAX_LENGTH_TOPIC
 } from "../../types/JournalEntryDto.ts";
-import {useForm} from "react-hook-form";
-import {formSubmit} from "../../services/formSubmit.ts";
+import {type SubmitHandler, useForm} from "react-hook-form";
 import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
 import {useEffect} from "react";
+import {useJournalEntryCreate} from "../../hooks/crud/useJournalEntryCreate.ts";
 
 type journalEntryForm = {
     operation: JournalEntryOperation,
@@ -44,19 +44,27 @@ export default function JournalEntryForm(props: Readonly<journalEntryForm>) {
         },
     });
 
+    const {createJournalEntry} = useJournalEntryCreate();
+
     useEffect(() => {
         reset(props.journalEntry);
     }, [props.journalEntry, reset]);
 
-    const onSubmit =
-        formSubmit({
-            reset,
-            id: props?.id,
-            operation: props.operation,
-            onUpdateSuccess: props.onUpdateSuccess,
-            onJournalEntryUpdate: props?.onJournalEntryUpdate,
-            onJournalEntryDelete: props?.onJournalEntryDelete
-        });
+    const onSubmit:SubmitHandler<JournalEntryRequestDto> = async (formData: JournalEntryRequestDto) => {
+        switch (props.operation) {
+            case "Create": {
+                    const result = await createJournalEntry(formData);
+                    if(result.success){
+                        alert("Data saved!");
+                        reset();
+                    }
+                    else{
+                        alert("Journal entry creation failed. Please check console.");
+                    }
+                break;
+            }
+        }
+    };
 
     const onReset = () => {
         setValues({
