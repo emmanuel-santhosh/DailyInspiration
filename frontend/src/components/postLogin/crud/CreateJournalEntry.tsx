@@ -1,4 +1,4 @@
-import JournalEntryForm from "../JournalEntryForm.tsx";
+import CreateForm from "../forms/CreateForm.tsx";
 
 export default function CreateJournalEntry() {
 
@@ -9,7 +9,7 @@ export default function CreateJournalEntry() {
                     Jot down your thoughts
                 </h2>
             </header>
-            <JournalEntryForm operation={"Create"}/>
+            <CreateForm operation={"Create"}/>
         </>
     )
 }

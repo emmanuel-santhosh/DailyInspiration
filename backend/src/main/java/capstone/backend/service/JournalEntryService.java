@@ -19,6 +19,10 @@ public class JournalEntryService {
         this.journalEntryRepo = journalEntryRepo;
     }
 
+    // Reusable exception messages
+    private static final String JOURNAL_ENTRY_WITH_ID = "Journal Entry with id: ";
+    private static final String NOT_FOUND = " not found !";
+
     protected Optional<JournalEntry> findJournalEntryByQuoteAndTopic(String quote, String topic) {
         return journalEntryRepo.findJournalEntryByQuoteAndTopic(quote.strip(), topic.strip());
     }
@@ -48,12 +52,21 @@ public class JournalEntryService {
             Long id,
             JournalEntryRequestDto journalEntryRequestDto) throws JournalEntryNotFoundException {
         JournalEntry possibleExistingEntry = journalEntryRepo.findById(id)
-                .orElseThrow(() -> new JournalEntryNotFoundException("Journal Entry with id: " + id + " not found !"));
+                .orElseThrow(() -> new JournalEntryNotFoundException(JOURNAL_ENTRY_WITH_ID + id + NOT_FOUND));
 
         possibleExistingEntry.setQuote(journalEntryRequestDto.quote());
         possibleExistingEntry.setTopic(journalEntryRequestDto.topic());
         journalEntryRepo.save(possibleExistingEntry);
 
         return JournalEntryResponseDto.fromEntity(possibleExistingEntry);
+    }
+
+    public String deleteJournalEntry(Long id) throws JournalEntryNotFoundException {
+        JournalEntry possibleExistingEntry = journalEntryRepo.findById(id)
+                .orElseThrow(() -> new JournalEntryNotFoundException(JOURNAL_ENTRY_WITH_ID + id + NOT_FOUND));
+
+        journalEntryRepo.delete(possibleExistingEntry);
+
+        return JOURNAL_ENTRY_WITH_ID + id + " deleted.";
     }
 }

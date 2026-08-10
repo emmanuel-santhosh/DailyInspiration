@@ -4,6 +4,7 @@ import CreateJournalEntry from "./crud/CreateJournalEntry.tsx";
 import ReadJournalEntries from "./crud/ReadJournalEntries.tsx";
 import Logout from "./Logout.tsx";
 import ChangeJournalEntries from "./crud/ChangeJournalEntries.tsx";
+import DeleteJournalEntries from "./crud/DeleteJournalEntries.tsx";
 
 export default function RoutersPostLogin() {
     return (
@@ -16,6 +17,8 @@ export default function RoutersPostLogin() {
                    element={<ReadJournalEntries/>}/>
             <Route path={"/update"}
                    element={<ChangeJournalEntries/>}/>
+            <Route path={"/delete"}
+                   element={<DeleteJournalEntries/>}/>
             <Route path={"/logout"}
                    element={<Logout/>}/>
         </Routes>

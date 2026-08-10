@@ -1,19 +1,27 @@
 import type {JournalEntryRequestDto, JournalEntryResponseDto} from "../../types/JournalEntryDto.ts";
 import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
-import {useState} from "react";
 import EditModal from "./EditModal.tsx";
+import useModal from "../../hooks/useModal.ts";
 
 interface ListOfJournalEntriesProps {
     journalEntries: JournalEntryResponseDto[];
-    operation: JournalEntryOperation
+    operation: JournalEntryOperation;
+
+    /*
+    Callback functions to update list of journal entries
+    following update and delete
+     */
+    onJournalEntryUpdate?: (updatedJournalEntry: JournalEntryResponseDto) => void;
+    onJournalEntryDelete?: (deletedJournalEntryId: number) => void;
 }
 
 export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntriesProps>) {
 
-    // Following hooks are for modal component
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [selectedJournalEntry, setSelectedJournalEntry] = useState<JournalEntryRequestDto | null>(null);
-    const [journalEntryId, setJournalEntryId] = useState<number>(0);
+    const {
+        isOpen, setIsOpen,
+        selectedJournalEntry, setSelectedJournalEntry,
+        journalEntryId, setJournalEntryId
+    } = useModal();
 
     const clickHandler = (journalEntry: JournalEntryRequestDto) => {
         setIsOpen(true);
@@ -24,8 +32,8 @@ export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntrie
         <section className={"journal__entry__section"}>
             {
                 props.journalEntries.map((journalEntry) =>
-                    <div key = {journalEntry.id}
-                    className={"journal__Entry__div"}>
+                    <div key={journalEntry.id}
+                         className={"journal__Entry__div"}>
                         {/*
                         * https://react.dev/learn/rendering-lists
                         * */}
@@ -53,6 +61,8 @@ export default function ListOfJournalEntries(props: Readonly<ListOfJournalEntrie
                            operation={props.operation}
                            journalEntryId={journalEntryId}
                            setSelectedJournalEntry={setSelectedJournalEntry}
+                           onJournalEntryUpdate={props.onJournalEntryUpdate}
+                           onJournalEntryDelete={props.onJournalEntryDelete}
                 />}
         </section>
     )
