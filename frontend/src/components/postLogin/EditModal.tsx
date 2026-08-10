@@ -1,8 +1,9 @@
 import type {JournalEntryRequestDto, JournalEntryResponseDto} from "../../types/JournalEntryDto.ts";
-import JournalEntryForm from "./forms/JournalEntryForm.tsx";
 import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
 import Modal from 'react-modal';
 import "../../styles/EditModal.css"
+import UpdateForm from "./forms/UpdateForm.tsx";
+import DeleteForm from "./forms/DeleteForm.tsx";
 
 type modalProps = {
     journalEntry: JournalEntryRequestDto,
@@ -36,13 +37,26 @@ export default function EditModal(props: Readonly<modalProps>) {
             contentLabel={"Edit Journal Entry"}
             onRequestClose={closeHandler}
             isOpen={!!props.journalEntry}>
-            <JournalEntryForm
-                operation={props.operation}
-                journalEntry={props.journalEntry}
-                id={props.journalEntryId}
-                onUpdateSuccess={handleUpdateSuccess}
-                onJournalEntryUpdate={props.onJournalEntryUpdate}
-                onJournalEntryDelete={props.onJournalEntryDelete}/>
+            {props.operation === "Update" &&
+                <UpdateForm
+                    operation={props.operation}
+                    journalEntry={props.journalEntry}
+                    id={props.journalEntryId}
+                    onUpdateSuccess={handleUpdateSuccess}
+                    onJournalEntryUpdate={props.onJournalEntryUpdate}
+                />
+            }
+
+            {props.operation === "Delete" &&
+                <DeleteForm
+                    operation={props.operation}
+                    journalEntry={props.journalEntry}
+                    id={props.journalEntryId}
+                    onUpdateSuccess={handleUpdateSuccess}
+                    onJournalEntryDelete={props.onJournalEntryDelete}
+                />
+            }
+
             <div className={"modal-buttons"}>
                 <button
                     onClick={closeHandler}
