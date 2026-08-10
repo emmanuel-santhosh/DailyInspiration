@@ -3,13 +3,13 @@ import {
     type JournalEntryResponseDto,
     MAX_LENGTH_QUOTE,
     MAX_LENGTH_TOPIC
-} from "../../types/JournalEntryDto.ts";
+} from "../../../types/JournalEntryDto.ts";
 import {type SubmitHandler, useForm} from "react-hook-form";
-import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
+import type {JournalEntryOperation} from "../../../types/JournalEntryOperation.ts";
 import {useEffect} from "react";
-import {useJournalEntryCreate} from "../../hooks/crud/useJournalEntryCreate.ts";
-import {useJournalEntryUpdate} from "../../hooks/crud/useJournalEntryUpdate.ts";
-import {useJournalEntryDelete} from "../../hooks/crud/useJournalEntryDelete.ts";
+import {useJournalEntryCreate} from "../../../hooks/crud/useJournalEntryCreate.ts";
+import {useJournalEntryUpdate} from "../../../hooks/crud/useJournalEntryUpdate.ts";
+import {useJournalEntryDelete} from "../../../hooks/crud/useJournalEntryDelete.ts";
 
 type journalEntryForm = {
     operation: JournalEntryOperation,

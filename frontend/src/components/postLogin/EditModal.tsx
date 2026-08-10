@@ -1,5 +1,5 @@
 import type {JournalEntryRequestDto, JournalEntryResponseDto} from "../../types/JournalEntryDto.ts";
-import JournalEntryForm from "./JournalEntryForm.tsx";
+import JournalEntryForm from "./forms/JournalEntryForm.tsx";
 import type {JournalEntryOperation} from "../../types/JournalEntryOperation.ts";
 import Modal from 'react-modal';
 import "../../styles/EditModal.css"
