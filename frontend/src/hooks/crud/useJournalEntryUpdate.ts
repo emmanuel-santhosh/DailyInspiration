@@ -5,7 +5,7 @@ import {
     type JournalEntryResponseDto
 } from "../../types/JournalEntryDto.ts";
 import axios from "axios";
-import type {JournalEntryCreateResult} from "../../types/AxiosToBackend.ts";
+import type {JournalEntryCreateResult} from "../../types/backend/BackendToAxios.ts";
 
 export const useJournalEntryUpdate = () => {
     const {isAxiosOperationTakingPlace, setIsAxiosOperationTakingPlace} = useJournalEntrySubmit();

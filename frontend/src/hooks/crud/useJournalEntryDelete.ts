@@ -1,7 +1,7 @@
 import useJournalEntrySubmit from "../useJournalEntrySubmit.ts";
 import axios from "axios";
 import {BASE_BACKEND_URI} from "../../types/JournalEntryDto.ts";
-import type {JournalEntryDeleteResult} from "../../types/AxiosToBackend.ts";
+import type {JournalEntryDeleteResult} from "../../types/backend/BackendToAxios.ts";
 
 export const useJournalEntryDelete = () => {
     const {
