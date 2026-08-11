@@ -9,12 +9,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-}
-
 body {
   cursor: var(--custom-cursor);
+  @apply bg-slate-grey min-h-screen;;
+}
+
+@theme {
+  --color-charcoal: #2C3E50;
+  --color-beige: #E8DCC8;
+  --color-paper: #FEFCF7;
+  --color-teal: #7FA89F;
+  --color-slate-grey: #70869D;
 }
