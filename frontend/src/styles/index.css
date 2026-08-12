@@ -11,7 +11,7 @@
 
 body {
   cursor: var(--custom-cursor);
-  @apply bg-slate-grey min-h-screen;;
+  @apply bg-slate-grey min-h-screen;
 }
 
 @theme {
