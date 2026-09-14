@@ -16,5 +16,12 @@ ___
 - Test DB: h2 embedded database
 ___
 ### Frontend
-- 
+- React
+- Typescript
+- Vite
+- React Hook Form for input validation
+___
+### Other features
+- GitHub CI for backend implemented
+- SonarQube for clean code verification
 ___
